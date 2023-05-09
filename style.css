@@ -59,6 +59,12 @@ a.link:hover {
     padding: 1rem;
 }
 
+.small-container {
+    max-width: 600px;
+    margin: 0 auto;
+    width: 85%;
+}
+
 .img-banner {
     margin-top: 1.75rem;
 }
@@ -71,7 +77,7 @@ ul {
     list-style: none;
 }
 
-.header {
+header {
     display: flex;
     flex-direction: column;
     box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.1), 0 8px 16px -16px rgba(0, 0, 0, 0.32);
@@ -207,6 +213,34 @@ ul {
 
 .partner__logo img{
     max-height: 125px;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    margin-top: 1.5rem;
+}
+
+input[type="text"], input[type="password"] {
+    margin-top: 0.5rem;
+    padding: 0.5em 1em;
+    background-color: #ECECEC;
+    font-size: 1em;
+}
+
+button {
+    font-size: 1.25rem;
+    padding: 0.75rem 2rem;
+    line-height: 2rem;
+    min-height: 3.5rem;
+    color: var(--white);
+    background-color: var(--midnight-blue);
+    margin-top: 1.5rem;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
 }
 
 @media only screen and (max-width: 993px) {
