@@ -13,10 +13,10 @@ function sendJsonRequest(url, data) {
 document.getElementById('login-form').addEventListener('submit', (event) => {
     event.preventDefault();
 
-    const username = document.getElementById('login-username').value;
+    const email = document.getElementById('login-email').value;
     const password = document.getElementById('login-password').value;
 
-    sendJsonRequest('login.php', {username, password})
+    sendJsonRequest('login.php', {email, password})
         .then((response) => {
             if (response.ok) {
                 location.href = 'protected_page.php';
@@ -29,10 +29,13 @@ document.getElementById('login-form').addEventListener('submit', (event) => {
 document.getElementById('register-form').addEventListener('submit', (event) => {
     event.preventDefault();
 
-    const username = document.getElementById('register-username').value;
+    const lastname = document.getElementById('register-lastname').value;
+    const firstname = document.getElementById('register-firstname').value;
+    const birth = document.getElementById('register-birth').value;
+    const email = document.getElementById('register-email').value;
     const password = document.getElementById('register-password').value;
 
-    sendJsonRequest('register.php', {username, password})
+    sendJsonRequest('register.php', {lastname, firstname, birth, email, password})
         .then((response) => {
             if (response.ok) {
                 alert("Inscription réussie");
