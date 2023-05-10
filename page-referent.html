@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="utf-8">
+        <title>Page référent</title>
+        <meta name="description" content="Exercice sur les fondamentaux de la mise en forme d'une page en HTML/CSS">
+        <meta name="author" content="Quentin FILLION">
+    </head>
+
+    <style>
+        table {
+            border-collapse: collapse;
+            border: 1px solid lightgreen;
+        }
+
+        th {
+            text-align: left;
+            padding-left: 7%;
+        }
+
+        td {
+            text-align: left;
+            color: blue;
+        }
+    </style>
+
+    <body>
+        <table>
+            <tr>
+                <th>NOM :</td>
+                <td id="nom"></td>
+            </tr>
+
+            <tr>
+                <th>PRENOM :</td>
+                <td id="prenom"></td>
+            </tr>
+
+            <tr>
+                <th>DATE DE NAISSANCE :</td>
+                <td id="date_naissance"></td>
+            </tr>
+
+            <tr>
+                <th>Mail :</td>
+                <td id="mail"></td>
+            </tr>
+
+            <tr>
+                <th>Réseau social :</td>
+                <td id="reseau_social"></td>
+            </tr>
+
+            <tr>
+                <th>PRESENTATION :</td>
+                <td id="presentation"></td>
+            </tr>
+
+            <tr>
+                <th>DUREE :</td>
+                <td id="duree"></td>
+            </tr>
+        </table>
+          
+        <script>
+            // Récupérer les données du fichier JSON
+            fetch('data.json')
+            .then(response => response.json())
+            .then(data => {
+                // Afficher les données dans les cellules de tableau correspondantes
+                document.getElementById('nom').innerHTML = data.nom;
+                document.getElementById('prenom').innerHTML = data.prenom;
+                document.getElementById('date_naissance').innerHTML = data.date_naissance;
+            });
+        </script>
+          
+          
+    </body>
+
+</html>
