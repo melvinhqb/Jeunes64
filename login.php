@@ -32,12 +32,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
 <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jeunes 6.4</title>
+    <title>Jeunes 6.4 - Connexion</title>
     <link rel="icon" href="assets/logo4.ico">
     <link rel="stylesheet" href="style.css">
     <script src="https://kit.fontawesome.com/9b3084e9e8.js" crossorigin="anonymous"></script>

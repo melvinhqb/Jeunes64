@@ -94,7 +94,6 @@ h1.xl-title.young {
 
 h2.slogan {
     letter-spacing: 5px;
-    color: #fff;
     font-size: 2rem;
 }
 
@@ -109,6 +108,7 @@ h2.slogan {
     flex-wrap: wrap;
     align-items: end;
     justify-content: space-between;
+    color: #fff;
 }
 
 .header-logo img {
@@ -118,6 +118,7 @@ h2.slogan {
 .header-status {
     display: flex;
     justify-content: end;
+    gap: 1em;
 }
 
 #logout-btn {
@@ -302,9 +303,48 @@ button {
     background-color: var(--midnight-blue);
     margin-top: 1.5rem;
     border: none;
+    cursor: pointer;
 }
 
 .center {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-content: center;    
+}
+
+/* index.html Page */
+
+section.index-part1{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    background: linear-gradient(to right, var(--white), var(--silver));
+}
+
+section.index-part1 h2 {
+    text-align: center;
+}
+
+.enter-btn {
+    text-decoration: none;
+    color: red;
+    text-transform: uppercase;
+    font-size: 2em;
+}
+
+section.index-part1 .large-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    height: 70vh;
+}
+
+section.index-part2 .large-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    height: 20vh;
 }
