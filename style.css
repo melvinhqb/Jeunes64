@@ -278,3 +278,53 @@ button {
         font-size: 12pt;
     }
 }
+
+.enter{
+    display: flex;
+    justify-content: center;
+    color: red;
+    font-weight: 400;
+}
+
+.slogan{
+    display: flex;
+    justify-content: center;
+    color: var(--midnight-blue);
+    font-weight: 500;
+    font-size: 50px;
+    text-align: center;
+}
+
+.bottom{
+    font-size: 1rem;
+    margin-top: 1rem;
+    line-height: 1.5rem;
+    text-align: justify;
+    color: var(--dim-gray);
+    font-weight: 300;
+}
+
+.bgcolor{
+    background: linear-gradient(to right, var(--white), var(--silver));
+}
+
+.image{
+    display: flex;
+    justify-content: center;
+}
+
+.image img {
+    width: 70%;
+}
+
+.footer{
+    background: var(--white);
+}
+
+.section1 {
+    height: 85vh;
+}
+
+.section2 {
+    height: 10vh;
+}
