@@ -284,6 +284,7 @@ button {
     justify-content: center;
     color: red;
     font-weight: 400;
+    transition: font-size 0.4s;
 }
 
 .slogan{
@@ -314,7 +315,7 @@ button {
 }
 
 .image img {
-    width: 70%;
+    width: 65%;
 }
 
 .footer{
@@ -328,3 +329,8 @@ button {
 .section2 {
     height: 10vh;
 }
+
+a.enter:hover {
+    font-size: 20px;
+}
+
