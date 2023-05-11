@@ -1,0 +1,103 @@
+<?php
+    session_start();
+
+    if (!isset($_SESSION['email'])) {
+        header("Location: login.php"); // Rediriger vers la page de connexion si l'utilisateur n'est pas connecté
+        exit();
+    }
+
+    $email = $_SESSION['email']; // Récupérer les informations de l'utilisateur courant
+    $file = 'users.json';
+    $data = file_get_contents($file);
+    $users = json_decode($data, true);
+
+    $userData = json_decode(file_get_contents($users[$email]), true);
+
+?>
+
+
+<!DOCTYPE html>
+<html>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jeunes 6.4</title>
+    <link rel="icon" href="assets/logo4.ico">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/9b3084e9e8.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <header>
+        <div class="large-container">
+            <div class="header-status">
+                <a href="logout.php" class="link" id="logout-btn"><i class="fa-solid fa-right-from-bracket"></i> Se déconnecter</a>
+            </div>
+            <div class="header-body">
+                <div class="header-logo">
+                    <a href="home.php"><img src="assets/logo-jeunes.png" alt="Logo Jeunes 6.4"></a>
+                </div>
+                <div class="header-text">
+                        <h1 class="xl-title young">Jeune</h1>
+                        <h2 class="slogan">Je donne de la valeur à mon engagement</h2>
+                </div>
+            </div>
+            <nav class="header-nav">
+                <ul class="nav-list">
+                    <li class="nav-item young"><a class="nav-link" href="profil.php">Jeune</a></li>
+                    <li class="nav-item referent"><a class="nav-link" href="">Référent</a></li>
+                    <li class="nav-item consultant"><a class="nav-link" href="">Consultant</a></li>
+                    <li class="nav-item partner"><a class="nav-link" href="partners.php">Partenaires</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <section>
+        <div class="medium-container">
+
+        les refences validées 
+            
+        <?php
+// Remplacer par l'e-mail réel
+$email = $_SESSION['email'];
+
+// Construire le chemin du fichier
+$file_path = 'data/' . $email . '.json';
+
+// Vérifier si le fichier existe
+if (file_exists($file_path)) {
+    // Lire le contenu du fichier
+    $json_data = file_get_contents($file_path);
+
+    // Décoder le contenu du fichier JSON en un tableau associatif
+    $user_data = json_decode($json_data, true);
+
+    // Parcourir chaque élément dans le tableau
+    foreach ($user_data as $key => $response) {
+        // Vérifier si la clé est un nombre (pour ignorer les éléments qui ne sont pas des réponses)
+        if (is_numeric($key)) {
+            // Vérifier si la propriété 'verif' de la réponse est égale à 1
+            if (isset($response['verif']) && $response['verif'] == 1) {
+                // Afficher la réponse
+                echo "REFERENCE";
+                echo "Response " . $key . ":<br>\n";
+                foreach ($response as $field => $value) {
+                    echo $field . ": " . $value . "<br>\n";
+                }
+                echo "<br>\n";
+            }
+        }
+    }
+} else {
+    echo "Le fichier n'existe pas.";
+}
+?>
+            <button onclick="location.href='new_ref.php'">creer une ref</button>
+            <button onclick="location.href='profil.php'">consulter mon profil</button>
+            <button onclick="location.href='edit_profil.php'">modifier mon profil</button>
+        </div>
+    </section>
+</body>
+</html>
