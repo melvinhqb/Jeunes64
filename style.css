@@ -6,6 +6,7 @@
     --silver: #c4c5c7ff;
     --dim-gray: #707176ff;
     --white: #ffffffff;
+    --main-color: #101f75ff;
 }
 
 * {
@@ -13,6 +14,24 @@
     padding: 0;
     font-family: 'Roboto', sans-serif;
 }
+
+.partner, .partner *{
+    --main-color: var(--dim-gray);
+}
+
+.young, .young *{
+    --main-color: var(--mexican-pink);
+}
+
+.referent, .referent *{
+    --main-color: var(--pistachio);
+}
+
+.consultant, .consultant *{
+    --main-color: var(--picton-blue);
+}
+
+
 
 /* General Styles */
 
@@ -164,36 +183,12 @@ h2.slogan {
     color: #fff;
 }
 
-.nav-item.young > a {
-    color: var(--mexican-pink);
+.nav-item > a {
+    color: var(--main-color);
 }
 
-.nav-item.referent > a {
-    color: var(--pistachio);
-}
-
-.nav-item.consultant > a {
-    color: var(--picton-blue);
-}
-
-.nav-item.partner > a {
-    color: var(--dim-gray);
-}
-
-.nav-item.young:hover {
-    background-color: var(--mexican-pink);
-}
-
-.nav-item.referent:hover {
-    background-color: var(--pistachio);
-}
-
-.nav-item.consultant:hover {
-    background-color: var(--picton-blue);
-}
-
-.nav-item.partner:hover {
-    background-color: var(--dim-gray);
+.nav-item:hover {
+    background-color: var(--main-color);
 }
 
 /* Cards Section */
@@ -281,7 +276,7 @@ section#cards {
     background-color: #ECECEC;
     font-size: 1em;
     border: none;
-    border-bottom: 2px solid var(--midnight-blue);
+    border-bottom: 2px solid var(--main-color);
 }
 
 .input-group textarea {
@@ -290,7 +285,7 @@ section#cards {
     background-color: #ECECEC;
     font-size: 1em;
     border: none;
-    border-bottom: 2px solid var(--midnight-blue);
+    border-bottom: 2px solid var(--main-color);
     resize: none;
 }
 
@@ -300,7 +295,7 @@ button {
     line-height: 2rem;
     min-height: 3.5rem;
     color: var(--white);
-    background-color: var(--midnight-blue);
+    background-color: var(--main-color);
     margin-top: 1.5rem;
     border: none;
     cursor: pointer;
@@ -347,4 +342,36 @@ section.index-part2 .large-container{
     justify-content: space-evenly;
     align-items: center;
     height: 20vh;
+}
+
+@media only screen and (max-width: 993px) {
+    .large-container, .medium-container {
+        width: 90%;
+    }
+
+    .header > .large-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .nav-list {
+        display: none;
+    }
+
+}
+
+@media only screen and (max-width: 450px) {
+
+    .header-logo {
+        max-width: 50%;
+    }
+
+    .header-logo img {
+        height: 50px;
+    }
+
+    #logo-slogan {
+        font-size: 12pt;
+    }
 }

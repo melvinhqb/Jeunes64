@@ -27,7 +27,7 @@
     <link rel="stylesheet" href="style.css">
     <script src="https://kit.fontawesome.com/9b3084e9e8.js" crossorigin="anonymous"></script>
 </head>
-<body class="young">
+<body>
 	<header>
         <div class="large-container">
             <div class="header-status">
@@ -52,7 +52,7 @@
             </nav>
         </div>
     </header>
-	<section>
+	<section class="young">
 		<div class="medium-container">
 			<h1 class="main-title">Bienvenue <?php echo $firstname; ?></h1>
 			<p class="text">Vous êtes connecté en tant que <?php echo $email; ?>.</p>

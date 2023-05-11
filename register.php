@@ -14,26 +14,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $usersFile = 'users.json';
     $usersData = file_get_contents($usersFile);
     $users = json_decode($usersData, true);
-    $lastname = $_POST['lastname'];
-    $firstname = $_POST['firstname'];
-    $birth = $_POST['birth'];
     $email = $_POST['email'];
-    $password = $_POST['password'];
-    $passwordHash = password_hash($password, PASSWORD_DEFAULT);
-    $userJsonFile = $email . '.json'; // Nom du fichier JSON pour l'utilisateur
-    $userJsonPath = 'data/' . $userJsonFile; // Chemin d'accès au fichier JSON pour l'utilisateur
-    $userData = array(
-        'email' => $email,
-        'password' => $passwordHash,
-        'lastname' => $lastname,
-        'firstname' => $firstname,
-        'birth' => $birth
-    );
-    $users[$email] = $userJsonPath; // Ajoute l'association e-mail / chemin d'accès au fichier JSON dans le tableau des utilisateurs
-    file_put_contents($usersFile, json_encode($users)); // Enregistre le tableau des utilisateurs dans le fichier users.json
-    file_put_contents($userJsonPath, json_encode($userData)); // Enregistre les données de l'utilisateur dans le fichier JSON correspondant
-    $_SESSION['email'] = $email;
-    header("Location: profil.php");
+    if (isset($users[$email])) {
+        // Si l'email est déjà utilisé, affiche un message d'erreur
+        $message = "Cet email est déjà utilisé. Veuillez en choisir un autre.";
+    } else {
+        $lastname = $_POST['lastname'];
+        $firstname = $_POST['firstname'];
+        $birth = $_POST['birth'];
+        $password = $_POST['password'];
+        $passwordHash = password_hash($password, PASSWORD_DEFAULT);
+        $userJsonFile = $email . '.json'; // Nom du fichier JSON pour l'utilisateur
+        $userJsonPath = 'data/' . $userJsonFile; // Chemin d'accès au fichier JSON pour l'utilisateur
+        $userData = array(
+            'email' => $email,
+            'password' => $passwordHash,
+            'lastname' => $lastname,
+            'firstname' => $firstname,
+            'birth' => $birth
+        );
+        $users[$email] = $userJsonPath; // Ajoute l'association e-mail / chemin d'accès au fichier JSON dans le tableau des utilisateurs
+        file_put_contents($usersFile, json_encode($users)); // Enregistre le tableau des utilisateurs dans le fichier users.json
+        file_put_contents($userJsonPath, json_encode($userData)); // Enregistre les données de l'utilisateur dans le fichier JSON correspondant
+        $_SESSION['email'] = $email;
+        header("Location: profil.php");
+    }
 }
 
 ?>
@@ -71,35 +76,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </nav>
         </div>
     </header>
-    <section class="form register">
+    <section class="form register young">
         <div class="small-container">
             <h1 class="main-title">S'inscrire</h1>
+            <?php if (isset($message)) { echo "<p class='text'>$message</p>"; } ?>
             <form id="register-form" action="register.php" method="post">
-        <div class="input-group">
-            <label for="register-lastname">Nom</label>
-            <input type="text" id="register-lastname" name="lastname" required>
+                <div class="input-group">
+                    <label for="register-lastname">Nom</label>
+                    <input type="text" id="register-lastname" name="lastname" required>
+                </div>
+                <div class="input-group">
+                    <label for="register-firstname">Prénom</label>
+                    <input type="text" id="register-firstname" name="firstname" required>
+                </div>
+                <div class="input-group">
+                    <label for="register-birth">Date de naissance</label>
+                    <input type="date" id="register-birth" name="birth" required>
+                </div>
+                <div class="input-group">
+                    <label for="register-email">Email</label>
+                    <input type="email" id="register-email" name="email" required>
+                </div>
+                <div class="input-group">
+                    <label for="register-password">Mot de passe</label>
+                    <input type="password" id="register-password" name="password" required>
+                </div>
+                <div class="center">
+                    <button type="submit">S'inscrire</button>
+                </div>
+            </form>
+            <p class="text">Déjà inscrit ? <a href="login.php" class="link">Se connecter</a></p>
         </div>
-        <div class="input-group">
-            <label for="register-firstname">Prénom</label>
-            <input type="text" id="register-firstname" name="firstname" required>
-        </div>
-        <div class="input-group">
-            <label for="register-birth">Date de naissance</label>
-            <input type="date" id="register-birth" name="birth" required>
-        </div>
-        <div class="input-group">
-            <label for="register-email">Email</label>
-            <input type="email" id="register-email" name="email" required>
-        </div>
-        <div class="input-group">
-            <label for="register-password">Mot de passe</label>
-            <input type="password" id="register-password" name="password" required>
-        </div>
-        <div class="center">
-            <button type="submit">S'inscrire</button>
-        </div>
-    </form>
-    <p class="text">Déjà inscrit ? <a href="login.php" class="link">Se connecter</a></p>
     </section>
 </body>
 </html>

@@ -54,9 +54,9 @@
             </nav>
         </div>
     </header>
-    <section>
+    <section class="young">
         <div class="medium-container">
-            <h1 class="main-title">Bienvenue <?php echo $userData['firstname']; ?> <?php echo $userData['lastname']; ?>!</h1>
+            <h1 class="main-title">Bienvenue <?php echo $userData['firstname']; ?> <?php echo $userData['lastname']; ?> !</h1>
             <p class="text">Email: <?php echo $userData['email']; ?></p>
             <p class="text">Date de naissance: <?php echo $userData['birth']; ?></p>
 

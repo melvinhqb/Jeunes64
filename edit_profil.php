@@ -69,7 +69,7 @@
             </nav>
         </div>
     </header>
-    <section>
+    <section class="young">
         <div class="small-container">
             <h1 class="main-title">
                 Modifier mes informations personelles

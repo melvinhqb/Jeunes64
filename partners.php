@@ -43,7 +43,7 @@ if (isset($_SESSION['email'])) {
             </nav>
         </div>
     </header>
-    <section id="partners">
+    <section class="partners">
         <div class="medium-container">
             <h1 class="main-title">
                 Nos partenaires
@@ -63,6 +63,5 @@ if (isset($_SESSION['email'])) {
             <p class="text"><a class="link" href=""><i class="fa-solid fa-newspaper"></i> Lire la charte de l'engagement</a></p>
         </div>
     </section>
-
 </body>
 </html>

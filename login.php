@@ -64,10 +64,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </nav>
         </div>
     </header>
-    <section class="form login">
+    <section class="form login young">
         <div class="small-container">
             <h1 class="main-title">Se connecter</h1>
-            <?php if (isset($message)) { echo "<p>$message</p>"; } ?>
+            <?php if (isset($message)) { echo "<p class='text'>$message</p>"; } ?>
             <form id="login-form" action="login.php" method="post">
                     <div class="input-group">
                         <label for="login-email">Email</label>
