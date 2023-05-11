@@ -37,12 +37,18 @@
 
 h1.main-title {
     font-size: 2rem;
-    margin-top: 2rem;
+    margin: 2rem 0;
 }
 
 h2.subtitle {
-    font-size: 1.75rem;
-    margin-top: 1.75rem;
+    font-size: 1.5rem;
+    margin: 1.5rem 0;
+}
+
+h3.h3-description {
+    font-size: 1rem;
+    margin: 1rem 0;
+    color: var(--main-color);
 }
 
 p.text {
@@ -287,6 +293,28 @@ section#cards {
     border: none;
     border-bottom: 2px solid var(--main-color);
     resize: none;
+}
+
+.checkbox-list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.checkbox-group {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+    width: 45%;
+}
+
+input[type=checkbox] {
+    accent-color: var(--main-color);
+    font-size: 1em;
+    margin: 0.5rem 0;
+    zoom: 1.5;
 }
 
 button {

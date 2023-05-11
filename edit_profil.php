@@ -17,16 +17,38 @@
         $lastname = $_POST['lastname'];
         $firstname = $_POST['firstname'];
         $birth = $_POST['birth'];
-        $userJsonFile = $email . '.json'; // Nom du fichier JSON pour l'utilisateur
-        $userJsonPath = 'data/' . $userJsonFile; // Chemin d'accès au fichier JSON pour l'utilisateur
+        $current_password = $_POST['current-password'];
+        $new_password = $_POST['new-password'];
+        if (!empty($current_password) && !empty($new_password)) {
+            if (password_verify($current_password, $userData["password"])) {
+                $userData["password"] = password_hash($new_password, PASSWORD_DEFAULT);
+                $userJsonFile = $email . '.json'; // Nom du fichier JSON pour l'utilisateur
+                $userJsonPath = 'data/' . $userJsonFile; // Chemin d'accès au fichier JSON pour l'utilisateur
 
-        $userData["lastname"] = $lastname;
-        $userData["firstname"] = $firstname;
-        $userData["birth"] = $birth;
-        
-        file_put_contents($userJsonPath, json_encode($userData)); // Enregistre les données de l'utilisateur dans le fichier JSON correspondant
-        $_SESSION['email'] = $email;
-        header("Location: profil.php");
+                $userData["lastname"] = $lastname;
+                $userData["firstname"] = $firstname;
+                $userData["birth"] = $birth;
+                
+                file_put_contents($userJsonPath, json_encode($userData)); // Enregistre les données de l'utilisateur dans le fichier JSON correspondant
+                $_SESSION['email'] = $email;
+                header("Location: profil.php");
+                //$message = "Vos informations ont été mis à jour.";
+            } else {
+                $message = "Le mot de passe actuel est incorrect.";
+            }
+        } else {
+            $userJsonFile = $email . '.json'; // Nom du fichier JSON pour l'utilisateur
+            $userJsonPath = 'data/' . $userJsonFile; // Chemin d'accès au fichier JSON pour l'utilisateur
+    
+            $userData["lastname"] = $lastname;
+            $userData["firstname"] = $firstname;
+            $userData["birth"] = $birth;
+            
+            file_put_contents($userJsonPath, json_encode($userData)); // Enregistre les données de l'utilisateur dans le fichier JSON correspondant
+            $_SESSION['email'] = $email;
+            header("Location: profil.php");
+            //$message = "Vos informations ont été mis à jour.";
+        }
     }
 
 ?>
@@ -74,6 +96,7 @@
             <h1 class="main-title">
                 Modifier mes informations personelles
             </h1>
+            <p class="text"><?php echo $message;?></p>
             <form action="edit_profil.php" method="post">
                 <div class="input-group">
                     <label for="lastname">Nom</label>
@@ -86,6 +109,14 @@
                 <div class="input-group">
                     <label for="birth">Date de naissance</label>
                     <input type="date" name="birth" value="<?php echo $userData['birth']; ?>" required><br>
+                </div>
+                <div class="input-group">
+                    <label for="current-password">Mot de passe actuel</label>
+                    <input type="password", name="current-password">
+                </div>
+                <div class="input-group">
+                    <label for="new-password">Nouveau mot de passe</label>
+                    <input type="password", name="new-password">
                 </div>
                 <div class="center">
                         <button type="submit" class="btn">Mettre à jour</button>

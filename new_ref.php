@@ -44,7 +44,7 @@
             </div>
             <nav class="header-nav">
                 <ul class="nav-list">
-                    <li class="nav-item young"><a class="nav-link" href="welcome.php">Jeune</a></li>
+                    <li class="nav-item young"><a class="nav-link" href="profil.php">Jeune</a></li>
                     <li class="nav-item referent"><a class="nav-link" href="">Référent</a></li>
                     <li class="nav-item consultant"><a class="nav-link" href="">Consultant</a></li>
                     <li class="nav-item partner"><a class="nav-link" href="partners.php">Partenaires</a></li>
@@ -53,20 +53,11 @@
         </div>
     </header>
 	<section class="young">
-		<div class="medium-container">
-			<h1 class="main-title">Bienvenue <?php echo $firstname; ?></h1>
-			<p class="text">Vous êtes connecté en tant que <?php echo $email; ?>.</p>
-		</div>
-        <div class="medium-container">
-            <nav class="vertical-nav">
-                <ul>
-                    <li><a href="">Demande de référence</a></li>
-                    <li><a href="">Mes informations personelles</a></li>
-                </ul>
-            </nav>
-            <div class="small-container">
-            <form action="">
-                <h2>Coordonnées du référent</h2>
+        <div class="small-container">
+            <h1 class="main-title">Demande de référence</h1>
+            <h3 class="h3-description">Décrivez votre expérience et mettez en avant ce que vous en avez retiré.</h3>
+            <form action="new_ref.php" method="post">
+                <h2 class="subtitle">Coordonnées du référent</h2>
                 <div class="input-group">
                     <label for="referent-lastname">Nom</label>
                     <input type="text" id="referent-lastname" name="referent-lastname" require>
@@ -83,7 +74,7 @@
                     <label for="referent-email">Email</label>
                     <input type="email" id="referent-email" name="referent-email" require>
                 </div>
-                <h2>Mon engagement</h2>
+                <h2 class="subtitle">Mon engagement</h2>
                 <div class="input-group">
                     <label for="description">Description</label>
                     <textarea name="description" id="description" rows="10"></textarea>
@@ -92,62 +83,62 @@
                     <label for="time">Durée (en jours)</label>
                     <input type="number" id="time" name="time" min=0 require>
                 </div>
+                <h2 class="subtitle">Mes savoirs être</h2>
+                <div class="checkbox-list">
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="Autonome" name="Autonome">
+                        <label for="Autonome">Autonome</label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="Capable d'anlyse et de sinthèse" name="Capable d'anlyse et de sinthèse">
+                        <label for="Capable d'anlyse et de sinthèse">Capable d'anlyse et de sinthèse</label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="A l'écoute" name="A l'écoute">
+                        <label for="A l'écoute">A l'écoute</label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="Organisé" name="Organisé">
+                        <label for="Organisé">Organisé</label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="Passionné" name="Passionné">
+                        <label for="Passionné">Passionné</label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="Fiable" name="Fiable">
+                        <label for="Fiable">Fiable</label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="Patient" name="Patient">
+                        <label for="Patient">Patient</label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="Réfléchi" name="Réfléchi">
+                        <label for="Réfléchi">Réfléchi</label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="Responsable" name="Responsable">
+                        <label for="Responsable">Responsable</label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="Sociable" name="Sociable">
+                        <label for="Sociable">Sociable</label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="Optimiste" name="Optimiste">
+                        <label for="Optimiste">Optimiste</label>
+                    </div>
+                </div>
+                <div class="center">
+                        <button type="submit" class="btn">Envoyer</button>
+                    </div>
             </form>
-            </div>
-   
-        <h2>Décrivez votre expérience et mettez en avant ce que vous en avez retiré.</h2>
-
-    <h2>MES SAVOIR ETRE</h2>
-
-    <fieldset>
-        <legend>JE SUIS*</legend>
-    
-        <div>
-          <input type="checkbox" id="Autonome" name="Autonome" checked>
-          <label for="Autonome">Autonome</label>
         </div>
-        <div>
-          <input type="checkbox" id="Capable d'anlyse et de sinthèse" name="Capable d'anlyse et de sinthèse">
-          <label for="Capable d'anlyse et de sinthèse">Capable d'anlyse et de sinthèse</label>
-        </div>
-        <div>
-            <input type="checkbox" id="A l'écoute" name="A l'écoute" checked>
-            <label for="A l'écoute">A l'écoute</label>
-        </div>
-        <div>
-            <input type="checkbox" id="Organisé" name="Organisé" checked>
-            <label for="Organisé">Organisé</label>
-        </div>
-        <div>
-            <input type="checkbox" id="Passionné" name="Passionné" checked>
-            <label for="Passionné">Passionné</label>
-        </div>
-        <div>
-            <input type="checkbox" id="Fiable" name="Fiable" checked>
-            <label for="Fiable">Fiable</label>
-        </div>
-        <div>
-            <input type="checkbox" id="Patient" name="Patient" checked>
-            <label for="Patient">Patient</label>
-        </div>
-        <div>
-            <input type="checkbox" id="Réfléchi" name="Réfléchi" checked>
-            <label for="Réfléchi">Réfléchi</label>
-        </div>
-        <div>
-            <input type="checkbox" id="Responsable" name="Responsable" checked>
-            <label for="Responsable">Responsable</label>
-        </div>
-        <div>
-            <input type="checkbox" id="Sociable" name="Sociable" checked>
-            <label for="Sociable">Sociable</label>
-        </div>
-        <div>
-            <input type="checkbox" id="Optimiste" name="Optimiste" checked>
-            <label for="Optimiste">Optimiste</label>
-        </div>
-    </fieldset>
-    <h5>*Faire 4 choix maximum</h5>
+        <div class="large-container">
+            <button onclick="location.href='new_ref.php'">creer une ref</button>
+            <button onclick="location.href='profil.php'">consulter mon profil</button>
+            <button onclick="location.href='edit_profil.php'">modifier mon profil</button>
         </div>
 	</section>
 </body>
