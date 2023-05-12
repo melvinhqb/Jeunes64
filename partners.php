@@ -60,7 +60,7 @@ if (isset($_SESSION['email'])) {
                 JEUNES 6.4 est un dispositif issu de la charte de l'engagement pour la jeunesse signée en 2013 par des partenaires institutionnels
                 qui ont décidé de mettre en commun leurs actions pour les jeunes des Pyrénées-Atlantiques.
             </p>
-            <p class="text"><a class="link" href=""><i class="fa-solid fa-newspaper"></i> Lire la charte de l'engagement</a></p>
+            <p class="text"><a class="link" href="assets/charte-engagement.pdf" download><i class="fa-solid fa-download"></i> Télécharger la charte de l'engagement</a></p>
         </div>
     </section>
 </body>

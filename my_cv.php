@@ -87,8 +87,8 @@
                     if ($verif == 1) {
                         echo "REFERENCE";
                         echo "Reponse" . $key . ":<br>\n";
-                        foreach ($reference['skills'] as $field => $value) {
-                            echo $field . ": " . $value . "<br>\n";
+                        foreach ($reference['skills'] as $skill) {
+                            echo $skill["name"] . ": " . $skill["value"] . " " . $skill["refValue"] . "<br>\n";
                         }
                     }
                 }
