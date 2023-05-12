@@ -21,42 +21,43 @@
 
         foreach ($userData['references'] as $stockedHash => $reference) {
             if ($stockedHash == $hash) {
-                $autonome['value'] = (isset($_POST['autonome'])) ? $_POST['autonome'] : "off";
-                $analyse['value'] = (isset($_POST['analyse'])) ? $_POST['analyse'] : "off";
-                $ecoute['value'] = (isset($_POST['ecoute'])) ? $_POST['ecoute'] : "off";
-                $organise['value'] = (isset($_POST['organise'])) ? $_POST['organise'] : "off";
-                $passionne['value'] = (isset($_POST['passionne'])) ? $_POST['passionne'] : "off";
-                $fiable['value'] = (isset($_POST['fiable'])) ? $_POST['fiable'] : "off";
-                $patient['value'] = (isset($_POST['patient'])) ? $_POST['patient'] : "off";
-                $reflechi['value'] = (isset($_POST['reflechi'])) ? $_POST['reflechi'] : "off";
-                $responsable['value'] = (isset($_POST['responsable'])) ? $_POST['responsable'] : "off";
-                $sociable['value'] = (isset($_POST['sociable'])) ? $_POST['sociable'] : "off";
-                $optimiste['value'] = (isset($_POST['optimiste'])) ? $_POST['optimiste'] : "off";
+                $skills = $reference['skills'];
+                $skills['autonome']['refValue'] = (isset($_POST['autonome'])) ? $_POST['autonome'] : "off";
+                $skills['analyse']['refValue'] = (isset($_POST['analyse'])) ? $_POST['analyse'] : "off";
+                $skills['ecoute']['refValue'] = (isset($_POST['ecoute'])) ? $_POST['ecoute'] : "off";
+                $skills['organise']['refValue'] = (isset($_POST['organise'])) ? $_POST['organise'] : "off";
+                $skills['passionne']['refValue'] = (isset($_POST['passionne'])) ? $_POST['passionne'] : "off";
+                $skills['fiable']['refValue'] = (isset($_POST['fiable'])) ? $_POST['fiable'] : "off";
+                $skills['patient']['refValue'] = (isset($_POST['patient'])) ? $_POST['patient'] : "off";
+                $skills['reflechi']['refValue'] = (isset($_POST['reflechi'])) ? $_POST['reflechi'] : "off";
+                $skills['responsable']['refValue'] = (isset($_POST['responsable'])) ? $_POST['responsable'] : "off";
+                $skills['sociable']['refValue'] = (isset($_POST['sociable'])) ? $_POST['sociable'] : "off";
+                $skills['optimiste']['refValue'] = (isset($_POST['optimiste'])) ? $_POST['optimiste'] : "off";
         
-                $autonome['name'] = "Autonome";
-                $analyse['name'] = "Capable d'analyse et de synthèse";
-                $ecoute['name'] = "À l'écoute";
-                $organise['name'] = "Organisé";
-                $passionne['name'] = "Passionné";
-                $fiable['name'] = "Fiable";
-                $patient['name'] = "Patient";
-                $reflechi['name'] = "Réfléchi";
-                $responsable['name'] = "Responsable";
-                $sociable['name'] = "Sociable";
-                $optimiste['name'] = "Optimiste";
+                $skills['autonome']['name'] = "Autonome";
+                $skills['analyse']['name'] = "Capable d'analyse et de synthèse";
+                $skills['ecoute']['name'] = "À l'écoute";
+                $skills['organise']['name'] = "Organisé";
+                $skills['passionne']['name'] = "Passionné";
+                $skills['fiable']['name'] = "Fiable";
+                $skills['patient']['name'] = "Patient";
+                $skills['reflechi']['name'] = "Réfléchi";
+                $skills['responsable']['name'] = "Responsable";
+                $skills['sociable']['name'] = "Sociable";
+                $skills['optimiste']['name'] = "Optimiste";
 
                 $userSkills = [
-                    'autonome' => $autonome,
-                    'analyse' => $analyse,
-                    'ecoute' => $ecoute,
-                    'organise' => $organise,
-                    'passionne' => $passionne,
-                    'fiable' => $fiable,
-                    'patient' => $patient,
-                    'reflechi' => $reflechi,
-                    'responsable' => $responsable,
-                    'sociable' => $sociable,
-                    'optimiste' => $optimiste,
+                    'autonome' => $skills['autonome'],
+                    'analyse' => $skills['analyse'],
+                    'ecoute' => $skills['ecoute'],
+                    'organise' => $skills['organise'],
+                    'passionne' => $skills['passionne'],
+                    'fiable' => $skills['fiable'],
+                    'patient' => $skills['patient'],
+                    'reflechi' => $skills['reflechi'],
+                    'responsable' => $skills['responsable'],
+                    'sociable' => $skills['sociable'],
+                    'optimiste' => $skills['optimiste'],
                 ];
 
                 $reference['skills'] = $userSkills;
