@@ -197,6 +197,14 @@ h2.slogan {
     background-color: var(--main-color);
 }
 
+.nav-item.active {
+    background-color: var(--main-color);
+}
+
+.nav-item.active a {
+    color: #fff;
+}
+
 /* Cards Section */
 
 section#cards {
@@ -283,6 +291,7 @@ section#cards {
     font-size: 1em;
     border: none;
     border-bottom: 2px solid var(--main-color);
+    border-radius: 5px 5px 0 0;
 }
 
 .input-group textarea {
@@ -293,6 +302,7 @@ section#cards {
     border: none;
     border-bottom: 2px solid var(--main-color);
     resize: none;
+    border-radius: 5px 5px 0 0;
 }
 
 .checkbox-list {
@@ -370,6 +380,35 @@ section.index-part2 .large-container{
     justify-content: space-evenly;
     align-items: center;
     height: 20vh;
+}
+
+/* Subnav Style */
+
+.subnav {
+    border-bottom: 1px var(--silver) solid;
+}
+
+.subnav-list {
+    display: flex;
+    flex-direction: row;
+}
+
+.subnav-item {
+    padding: 0.75rem 0;
+}
+
+.subnav-item.active {
+    border-bottom: 2px solid var(--mexican-pink);
+}
+
+.subnav-link {
+    padding: 0.75rem 1rem;
+    text-decoration: none;
+    color: var(--main-color);
+}
+
+.subnav-item.active .subnav-link {
+    font-weight: bolder;
 }
 
 @media only screen and (max-width: 993px) {

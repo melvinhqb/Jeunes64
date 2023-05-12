@@ -6,14 +6,76 @@
     }
 
     $email = $_SESSION['email'];
-
     $file = 'users.json';
     $data = file_get_contents($file);
     $users = json_decode($data, true);
-
     $userData = json_decode(file_get_contents($users[$email]), true);
 
-    $firstname = $userData["firstname"];
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        // Collecte des informations du formulaire
+        $refLastname = $_POST['referent-lastname'];
+        $refFirstname = $_POST['referent-firstname'];
+        $refBirth = $_POST['referent-birth'];
+        $refEmail = $_POST['referent-email'];
+        $description = $_POST['description'];
+        $period = $_POST['period'];
+
+        $autonome = (isset($_POST['autonome'])) ? $_POST['autonome'] : null;
+        $analyse = (isset($_POST['analyse'])) ? $_POST['analyse'] : null;
+        $ecoute = (isset($_POST['ecoute'])) ? $_POST['ecoute'] : null;
+        $organise = (isset($_POST['organise'])) ? $_POST['organise'] : null;
+        $passionne = (isset($_POST['passionne'])) ? $_POST['passionne'] : null;
+        $fiable = (isset($_POST['fiable'])) ? $_POST['fiable'] : null;
+        $patient = (isset($_POST['patient'])) ? $_POST['patient'] : null;
+        $reflechi = (isset($_POST['reflechi'])) ? $_POST['reflechi'] : null;
+        $responsable = (isset($_POST['responsable'])) ? $_POST['responsable'] : null;
+        $sociable = (isset($_POST['sociable'])) ? $_POST['sociable'] : null;
+        $optimiste = (isset($_POST['optimiste'])) ? $_POST['optimiste'] : null;
+
+        $userSkills = [
+            'autonome' => $autonome,
+            'analyse' => $analyse,
+            'ecoute' => $ecoute,
+            'organise' => $organise,
+            'passionne' => $passionne,
+            'fiable' => $fiable,
+            'patient' => $patient,
+            'reflechi' => $reflechi,
+            'responsable' => $responsable,
+            'sociable' => $sociable,
+            'optimiste' => $optimiste,
+        ];  
+
+        // Préparation des données à stocker
+        $newReference = [
+            'lastname' => $refLastname,
+            'firstname' => $refFirstname,
+            'birth' => $refBirth,
+            'email' => $refEmail,
+            'description' => $description,
+            'period' => $period,
+            'skills' => $userSkills,
+            'verif' => '0',
+        ];
+
+        $newRefHash = substr(hash('sha256', implode("", $newReference)), 0, 12);
+        $newReference['hash'] = $newRefHash;
+
+        // Remplacement du caractère @ dans l'adresse e-mail par un tiret bas (_)
+        $userJsonFile = $email . '.json'; // Nom du fichier JSON pour l'utilisateur
+        $userJsonPath = 'data/' . $userJsonFile; // Chemin d'accès au fichier JSON pour l'utilisateur
+
+        // Ajouter les nouvelles données à la suite des données existantes
+        $userData['references'][] = $newReference;
+
+        // Réécrire le fichier avec les données mises à jour
+        file_put_contents($userJsonPath, json_encode($userData));
+
+        // Redirection vers une autre page (par exemple, le tableau de bord) après l'enregistrement des données
+        header("Location: profil.php");
+        exit();
+    }
+
 ?>
 
 <!DOCTYPE html>
@@ -44,7 +106,7 @@
             </div>
             <nav class="header-nav">
                 <ul class="nav-list">
-                    <li class="nav-item young"><a class="nav-link" href="profil.php">Jeune</a></li>
+                    <li class="nav-item young active"><a class="nav-link" href="profil.php">Jeune</a></li>
                     <li class="nav-item referent"><a class="nav-link" href="">Référent</a></li>
                     <li class="nav-item consultant"><a class="nav-link" href="">Consultant</a></li>
                     <li class="nav-item partner"><a class="nav-link" href="partners.php">Partenaires</a></li>
@@ -53,6 +115,15 @@
         </div>
     </header>
 	<section class="young">
+        <div class="subnav">
+            <div class="medium-container">
+                <ul class="subnav-list">
+                    <li class="subnav-item"><a class="subnav-link" href="profil.php">Mon profil</a></li>
+                    <li class="subnav-item active"><a class="subnav-link" href="new_ref.php">Demande de référence</a></li>
+                    <li class="subnav-item"><a class="subnav-link" href="edit_profil.php">Modifier mon profil</a></li>
+                </ul>
+            </div>
+        </div>
         <div class="small-container">
             <h1 class="main-title">Demande de référence</h1>
             <h3 class="h3-description">Décrivez votre expérience et mettez en avant ce que vous en avez retiré.</h3>
@@ -80,65 +151,60 @@
                     <textarea name="description" id="description" rows="10"></textarea>
                 </div>
                 <div class="input-group">
-                    <label for="time">Durée (en jours)</label>
-                    <input type="number" id="time" name="time" min=0 require>
+                    <label for="period">Durée (en jours)</label>
+                    <input type="number" id="period" name="period" min=1 require>
                 </div>
                 <h2 class="subtitle">Mes savoirs être</h2>
                 <div class="checkbox-list">
                     <div class="checkbox-group">
-                        <input type="checkbox" id="Autonome" name="Autonome">
-                        <label for="Autonome">Autonome</label>
+                        <input type="checkbox" id="autonome" name="autonome">
+                        <label for="autonome">Autonome</label>
                     </div>
                     <div class="checkbox-group">
-                        <input type="checkbox" id="Capable d'anlyse et de sinthèse" name="Capable d'anlyse et de sinthèse">
-                        <label for="Capable d'anlyse et de sinthèse">Capable d'anlyse et de sinthèse</label>
+                        <input type="checkbox" id="analyse" name="analyse">
+                        <label for="analyse">Capable d'anlyse et de sinthèse</label>
                     </div>
                     <div class="checkbox-group">
-                        <input type="checkbox" id="A l'écoute" name="A l'écoute">
-                        <label for="A l'écoute">A l'écoute</label>
+                        <input type="checkbox" id="ecoute" name="ecoute">
+                        <label for="ecoute">A l'écoute</label>
                     </div>
                     <div class="checkbox-group">
-                        <input type="checkbox" id="Organisé" name="Organisé">
-                        <label for="Organisé">Organisé</label>
+                        <input type="checkbox" id="organise" name="organise">
+                        <label for="organise">Organisé</label>
                     </div>
                     <div class="checkbox-group">
-                        <input type="checkbox" id="Passionné" name="Passionné">
-                        <label for="Passionné">Passionné</label>
+                        <input type="checkbox" id="passionne" name="passionne">
+                        <label for="passionne">Passionné</label>
                     </div>
                     <div class="checkbox-group">
-                        <input type="checkbox" id="Fiable" name="Fiable">
-                        <label for="Fiable">Fiable</label>
+                        <input type="checkbox" id="fiable" name="fiable">
+                        <label for="fiable">Fiable</label>
                     </div>
                     <div class="checkbox-group">
-                        <input type="checkbox" id="Patient" name="Patient">
-                        <label for="Patient">Patient</label>
+                        <input type="checkbox" id="patient" name="patient">
+                        <label for="patient">Patient</label>
                     </div>
                     <div class="checkbox-group">
-                        <input type="checkbox" id="Réfléchi" name="Réfléchi">
-                        <label for="Réfléchi">Réfléchi</label>
+                        <input type="checkbox" id="reflechi" name="reflechi">
+                        <label for="reflechi">Réfléchi</label>
                     </div>
                     <div class="checkbox-group">
-                        <input type="checkbox" id="Responsable" name="Responsable">
-                        <label for="Responsable">Responsable</label>
+                        <input type="checkbox" id="responsable" name="responsable">
+                        <label for="responsable">Responsable</label>
                     </div>
                     <div class="checkbox-group">
-                        <input type="checkbox" id="Sociable" name="Sociable">
-                        <label for="Sociable">Sociable</label>
+                        <input type="checkbox" id="sociable" name="sociable">
+                        <label for="sociable">Sociable</label>
                     </div>
                     <div class="checkbox-group">
-                        <input type="checkbox" id="Optimiste" name="Optimiste">
-                        <label for="Optimiste">Optimiste</label>
+                        <input type="checkbox" id="optimiste" name="optimiste">
+                        <label for="optimiste">Optimiste</label>
                     </div>
                 </div>
                 <div class="center">
                         <button type="submit" class="btn">Envoyer</button>
                     </div>
             </form>
-        </div>
-        <div class="large-container">
-            <button onclick="location.href='new_ref.php'">creer une ref</button>
-            <button onclick="location.href='profil.php'">consulter mon profil</button>
-            <button onclick="location.href='edit_profil.php'">modifier mon profil</button>
         </div>
 	</section>
 </body>

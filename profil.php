@@ -46,7 +46,7 @@
             </div>
             <nav class="header-nav">
                 <ul class="nav-list">
-                    <li class="nav-item young"><a class="nav-link" href="profil.php">Jeune</a></li>
+                    <li class="nav-item young active"><a class="nav-link" href="profil.php">Jeune</a></li>
                     <li class="nav-item referent"><a class="nav-link" href="">Référent</a></li>
                     <li class="nav-item consultant"><a class="nav-link" href="">Consultant</a></li>
                     <li class="nav-item partner"><a class="nav-link" href="partners.php">Partenaires</a></li>
@@ -55,14 +55,19 @@
         </div>
     </header>
     <section class="young">
+        <div class="subnav">
+            <div class="medium-container">
+                <ul class="subnav-list">
+                    <li class="subnav-item active"><a class="subnav-link" href="profil.php">Mon profil</a></li>
+                    <li class="subnav-item"><a class="subnav-link" href="new_ref.php">Demande de référence</a></li>
+                    <li class="subnav-item"><a class="subnav-link" href="edit_profil.php">Modifier mon profil</a></li>
+                </ul>
+            </div>
+        </div>
         <div class="medium-container">
             <h1 class="main-title">Bienvenue <?php echo $userData['firstname']; ?> <?php echo $userData['lastname']; ?> !</h1>
             <p class="text">Email: <?php echo $userData['email']; ?></p>
             <p class="text">Date de naissance: <?php echo $userData['birth']; ?></p>
-
-            <button onclick="location.href='new_ref.php'">creer une ref</button>
-            <button onclick="location.href='profil.php'">consulter mon profil</button>
-            <button onclick="location.href='edit_profil.php'">modifier mon profil</button>
         </div>
     </section>
 </body>

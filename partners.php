@@ -38,7 +38,7 @@ if (isset($_SESSION['email'])) {
                     <li class="nav-item young"><a class="nav-link" href="profil.php">Jeune</a></li>
                     <li class="nav-item referent"><a class="nav-link" href="">Référent</a></li>
                     <li class="nav-item consultant"><a class="nav-link" href="">Consultant</a></li>
-                    <li class="nav-item partner"><a class="nav-link" href="partners.php">Partenaires</a></li>
+                    <li class="nav-item partner active"><a class="nav-link" href="partners.php">Partenaires</a></li>
                 </ul>
             </nav>
         </div>
