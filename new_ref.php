@@ -20,17 +20,29 @@
         $description = $_POST['description'];
         $period = $_POST['period'];
 
-        $autonome = (isset($_POST['autonome'])) ? $_POST['autonome'] : null;
-        $analyse = (isset($_POST['analyse'])) ? $_POST['analyse'] : null;
-        $ecoute = (isset($_POST['ecoute'])) ? $_POST['ecoute'] : null;
-        $organise = (isset($_POST['organise'])) ? $_POST['organise'] : null;
-        $passionne = (isset($_POST['passionne'])) ? $_POST['passionne'] : null;
-        $fiable = (isset($_POST['fiable'])) ? $_POST['fiable'] : null;
-        $patient = (isset($_POST['patient'])) ? $_POST['patient'] : null;
-        $reflechi = (isset($_POST['reflechi'])) ? $_POST['reflechi'] : null;
-        $responsable = (isset($_POST['responsable'])) ? $_POST['responsable'] : null;
-        $sociable = (isset($_POST['sociable'])) ? $_POST['sociable'] : null;
-        $optimiste = (isset($_POST['optimiste'])) ? $_POST['optimiste'] : null;
+        $autonome['value'] = (isset($_POST['autonome'])) ? $_POST['autonome'] : "off";
+        $analyse['value'] = (isset($_POST['analyse'])) ? $_POST['analyse'] : "off";
+        $ecoute['value'] = (isset($_POST['ecoute'])) ? $_POST['ecoute'] : "off";
+        $organise['value'] = (isset($_POST['organise'])) ? $_POST['organise'] : "off";
+        $passionne['value'] = (isset($_POST['passionne'])) ? $_POST['passionne'] : "off";
+        $fiable['value'] = (isset($_POST['fiable'])) ? $_POST['fiable'] : "off";
+        $patient['value'] = (isset($_POST['patient'])) ? $_POST['patient'] : "off";
+        $reflechi['value'] = (isset($_POST['reflechi'])) ? $_POST['reflechi'] : "off";
+        $responsable['value'] = (isset($_POST['responsable'])) ? $_POST['responsable'] : "off";
+        $sociable['value'] = (isset($_POST['sociable'])) ? $_POST['sociable'] : "off";
+        $optimiste['value'] = (isset($_POST['optimiste'])) ? $_POST['optimiste'] : "off";
+
+        $autonome['name'] = "Autonome";
+        $analyse['name'] = "Capable d'analyse et de synthèse";
+        $ecoute['name'] = "À l'écoute";
+        $organise['name'] = "Organisé";
+        $passionne['name'] = "Passionné";
+        $fiable['name'] = "Fiable";
+        $patient['name'] = "Patient";
+        $reflechi['name'] = "Réfléchi";
+        $responsable['name'] = "Responsable";
+        $sociable['name'] = "Sociable";
+        $optimiste['name'] = "Optimiste";
 
         $userSkills = [
             'autonome' => $autonome,
@@ -59,14 +71,13 @@
         ];
 
         $newRefHash = substr(hash('sha256', implode("", $newReference)), 0, 12);
-        $newReference['hash'] = $newRefHash;
 
         // Remplacement du caractère @ dans l'adresse e-mail par un tiret bas (_)
-        $userJsonFile = $email . '.json'; // Nom du fichier JSON pour l'utilisateur
+        $userJsonFile = str_replace("@", "_", $email) . '.json'; // Nom du fichier JSON pour l'utilisateur
         $userJsonPath = 'data/' . $userJsonFile; // Chemin d'accès au fichier JSON pour l'utilisateur
 
         // Ajouter les nouvelles données à la suite des données existantes
-        $userData['references'][] = $newReference;
+        $userData['references'][$newRefHash] = $newReference;
 
         // Réécrire le fichier avec les données mises à jour
         file_put_contents($userJsonPath, json_encode($userData));
@@ -107,7 +118,7 @@
             <nav class="header-nav">
                 <ul class="nav-list">
                     <li class="nav-item young active"><a class="nav-link" href="profil.php">Jeune</a></li>
-                    <li class="nav-item referent"><a class="nav-link" href="">Référent</a></li>
+                    <li class="nav-item referent"><a class="nav-link" href="verif_hash.php">Référent</a></li>
                     <li class="nav-item consultant"><a class="nav-link" href="">Consultant</a></li>
                     <li class="nav-item partner"><a class="nav-link" href="partners.php">Partenaires</a></li>
                 </ul>
@@ -121,6 +132,7 @@
                     <li class="subnav-item"><a class="subnav-link" href="profil.php">Mon profil</a></li>
                     <li class="subnav-item active"><a class="subnav-link" href="new_ref.php">Demande de référence</a></li>
                     <li class="subnav-item"><a class="subnav-link" href="edit_profil.php">Modifier mon profil</a></li>
+                    <li class="subnav-item"><a class="subnav-link" href="my_cv.php">Mon CV</a></li>
                 </ul>
             </div>
         </div>
@@ -203,7 +215,7 @@
                 </div>
                 <div class="center">
                         <button type="submit" class="btn">Envoyer</button>
-                    </div>
+                </div>
             </form>
         </div>
 	</section>

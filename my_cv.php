@@ -24,7 +24,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jeunes 6.4 - Mon profil</title>
+    <title>Jeunes 6.4</title>
     <link rel="icon" href="assets/logo4.ico">
     <link rel="stylesheet" href="style.css">
     <script src="https://kit.fontawesome.com/9b3084e9e8.js" crossorigin="anonymous"></script>
@@ -46,7 +46,7 @@
             </div>
             <nav class="header-nav">
                 <ul class="nav-list">
-                    <li class="nav-item young active"><a class="nav-link" href="profil.php">Jeune</a></li>
+                    <li class="nav-item young"><a class="nav-link" href="profil.php">Jeune</a></li>
                     <li class="nav-item referent"><a class="nav-link" href="verif_hash.php">Référent</a></li>
                     <li class="nav-item consultant"><a class="nav-link" href="">Consultant</a></li>
                     <li class="nav-item partner"><a class="nav-link" href="partners.php">Partenaires</a></li>
@@ -58,17 +58,41 @@
         <div class="subnav">
             <div class="medium-container">
                 <ul class="subnav-list">
-                    <li class="subnav-item active"><a class="subnav-link" href="profil.php">Mon profil</a></li>
+                    <li class="subnav-item"><a class="subnav-link" href="profil.php">Mon profil</a></li>
                     <li class="subnav-item"><a class="subnav-link" href="new_ref.php">Demande de référence</a></li>
                     <li class="subnav-item"><a class="subnav-link" href="edit_profil.php">Modifier mon profil</a></li>
-                    <li class="subnav-item"><a class="subnav-link" href="my_cv.php">Mon CV</a></li>
+                    <li class="subnav-item active"><a class="subnav-link" href="my_cv.php">Mon CV</a></li>
                 </ul>
             </div>
         </div>
         <div class="medium-container">
-            <h1 class="main-title">Bienvenue <?php echo $userData['firstname']; ?> <?php echo $userData['lastname']; ?> !</h1>
-            <p class="text">Email: <?php echo $userData['email']; ?></p>
-            <p class="text">Date de naissance: <?php echo $userData['birth']; ?></p>
+            <h1 class="main-title">Les références validées</h1>
+            <?php
+                session_start();
+
+                if (!isset($_SESSION['email'])) {
+                    header("Location: login.php");
+                }
+
+                $email = $_SESSION['email'];
+                $file = 'users.json';
+                $data = file_get_contents($file);
+                $users = json_decode($data, true);
+                $userData = json_decode(file_get_contents($users[$email]), true);
+
+                foreach ($userData['references'] as $key => $reference) {
+                    // Récupérer la valeur de 'verif'
+                    $verif = $reference['verif'];
+
+                    if ($verif == 1) {
+                        echo "REFERENCE";
+                        echo "Reponse" . $key . ":<br>\n";
+                        foreach ($reference['skills'] as $field => $value) {
+                            echo $field . ": " . $value . "<br>\n";
+                        }
+                    }
+                }
+            ?>
         </div>
     </section>
 </body>

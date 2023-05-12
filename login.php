@@ -57,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <nav class="header-nav">
                 <ul class="nav-list">
                     <li class="nav-item young active"><a class="nav-link" href="login.php">Jeune</a></li>
-                    <li class="nav-item referent"><a class="nav-link" href="">Référent</a></li>
+                    <li class="nav-item referent"><a class="nav-link" href="verif_hash.php">Référent</a></li>
                     <li class="nav-item consultant"><a class="nav-link" href="">Consultant</a></li>
                     <li class="nav-item partner"><a class="nav-link" href="partners.php">Partenaires</a></li>
                 </ul>

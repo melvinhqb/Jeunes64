@@ -371,7 +371,7 @@ section.index-part1 .large-container{
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
-    height: 70vh;
+    height: 80vh;
 }
 
 section.index-part2 .large-container{
@@ -379,7 +379,7 @@ section.index-part2 .large-container{
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
-    height: 20vh;
+    height: 10vh;
 }
 
 /* Subnav Style */

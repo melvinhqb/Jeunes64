@@ -22,7 +22,7 @@
         if (!empty($current_password) && !empty($new_password)) {
             if (password_verify($current_password, $userData["password"])) {
                 $userData["password"] = password_hash($new_password, PASSWORD_DEFAULT);
-                $userJsonFile = $email . '.json'; // Nom du fichier JSON pour l'utilisateur
+                $userJsonFile = str_replace("@", "_", $email) . '.json'; // Nom du fichier JSON pour l'utilisateur
                 $userJsonPath = 'data/' . $userJsonFile; // Chemin d'accès au fichier JSON pour l'utilisateur
 
                 $userData["lastname"] = $lastname;
@@ -37,7 +37,7 @@
                 $message = "Le mot de passe actuel est incorrect.";
             }
         } else {
-            $userJsonFile = $email . '.json'; // Nom du fichier JSON pour l'utilisateur
+            $userJsonFile = str_replace("@", "_", $email) . '.json'; // Nom du fichier JSON pour l'utilisateur
             $userJsonPath = 'data/' . $userJsonFile; // Chemin d'accès au fichier JSON pour l'utilisateur
     
             $userData["lastname"] = $lastname;
@@ -84,7 +84,7 @@
             <nav class="header-nav">
                 <ul class="nav-list">
                     <li class="nav-item young active"><a class="nav-link" href="profil.php">Jeune</a></li>
-                    <li class="nav-item referent"><a class="nav-link" href="">Référent</a></li>
+                    <li class="nav-item referent"><a class="nav-link" href="verif_hash.php">Référent</a></li>
                     <li class="nav-item consultant"><a class="nav-link" href="">Consultant</a></li>
                     <li class="nav-item partner"><a class="nav-link" href="partners.php">Partenaires</a></li>
                 </ul>
@@ -98,6 +98,7 @@
                     <li class="subnav-item"><a class="subnav-link" href="profil.php">Mon profil</a></li>
                     <li class="subnav-item"><a class="subnav-link" href="new_ref.php">Demande de référence</a></li>
                     <li class="subnav-item active"><a class="subnav-link" href="edit_profil.php">Modifier mon profil</a></li>
+                    <li class="subnav-item"><a class="subnav-link" href="my_cv.php">Mon CV</a></li>
                 </ul>
             </div>
         </div>
