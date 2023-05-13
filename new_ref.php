@@ -70,7 +70,7 @@
             'verif' => '0',
         ];
 
-        $newRefHash = substr(hash('sha256', implode("", $newReference)), 0, 12);
+        $newRefHash = substr(hash('sha256', json_encode($newReference)), 0, 12);
 
         // Remplacement du caractère @ dans l'adresse e-mail par un tiret bas (_)
         $userJsonFile = str_replace("@", "_", $email) . '.json'; // Nom du fichier JSON pour l'utilisateur

@@ -1,21 +1,3 @@
-<?php
-    session_start();
-
-    if (!isset($_SESSION['email'])) {
-        header("Location: login.php"); // Rediriger vers la page de connexion si l'utilisateur n'est pas connecté
-        exit();
-    }
-
-    $email = $_SESSION['email']; // Récupérer les informations de l'utilisateur courant
-    $file = 'users.json';
-    $data = file_get_contents($file);
-    $users = json_decode($data, true);
-
-    $userData = json_decode(file_get_contents($users[$email]), true);
-
-?>
-
-
 <!DOCTYPE html>
 <html>
 <!DOCTYPE html>
@@ -46,7 +28,7 @@
             </div>
             <nav class="header-nav">
                 <ul class="nav-list">
-                    <li class="nav-item young"><a class="nav-link" href="profil.php">Jeune</a></li>
+                    <li class="nav-item young active"><a class="nav-link" href="profil.php">Jeune</a></li>
                     <li class="nav-item referent"><a class="nav-link" href="verif_hash.php">Référent</a></li>
                     <li class="nav-item consultant"><a class="nav-link" href="">Consultant</a></li>
                     <li class="nav-item partner"><a class="nav-link" href="partners.php">Partenaires</a></li>
@@ -72,6 +54,7 @@
 
                 if (!isset($_SESSION['email'])) {
                     header("Location: login.php");
+                    exit();
                 }
 
                 $email = $_SESSION['email'];
@@ -79,16 +62,21 @@
                 $data = file_get_contents($file);
                 $users = json_decode($data, true);
                 $userData = json_decode(file_get_contents($users[$email]), true);
+                
+                if (isset($userData['references']) && !empty($userData['references'])) {
+                    foreach ($userData['references'] as $key => $reference) {
+                        // Récupérer la valeur de 'verif'
+                        $verif = $reference['verif'];
 
-                foreach ($userData['references'] as $key => $reference) {
-                    // Récupérer la valeur de 'verif'
-                    $verif = $reference['verif'];
-
-                    if ($verif == 1) {
-                        echo "REFERENCE";
-                        echo "Reponse" . $key . ":<br>\n";
-                        foreach ($reference['skills'] as $skill) {
-                            echo $skill["name"] . ": " . $skill["value"] . " " . $skill["refValue"] . "<br>\n";
+                        if ($verif == 1) {
+                            echo "REFERENCE";
+                            echo "Reponse" . $key . ":<br>\n";
+                            foreach ($reference['skills'] as $skill) {
+                                echo $skill["name"] . ": " . $skill["value"] . " " . $skill["refValue"] . "<br>\n";
+                            }
+                        } else {
+                            echo "REFERENCE (en attente de réponse)";
+                            echo "Reponse" . $key . ":<br>\n";
                         }
                     }
                 }

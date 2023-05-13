@@ -7,6 +7,8 @@
         $message = '<a href="login.php" class="link" id="login-btn">Se connecter</a><a href="register.php" class="link" id="register-btn">S\'inscrire</a>';
     }
 
+    $err_msg = "";
+
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $file = 'users.json';
@@ -20,19 +22,22 @@
         foreach ($users as $email => $path) {
 
             $userData = json_decode(file_get_contents($users[$email]), true);
-
-            foreach ($userData['references'] as $stockedHash => $reference) {
-                if ($stockedHash == $hash) {
-                    if ($userData['references'][$hash]['verif'] == 1) {
-                        $err_msg = "Ce code n'est plus valide";
-                    }
-                    else {
-                        //echo password_hash($hash, PASSWORD_DEFAULT);
-                        header("Location: valid_ref.php?hash=" . password_hash($hash, PASSWORD_DEFAULT));
+        
+            if (isset($userData['references'])) { // Vérification de la clé "references"
+                foreach ($userData['references'] as $stockedHash => $reference) {
+                    if ($stockedHash == $hash) {
+                        if ($userData['references'][$hash]['verif'] == 1) {
+                            $err_msg = "Ce code n'est plus valide";
+                        }
+                        else {
+                            //echo password_hash($hash, PASSWORD_DEFAULT);
+                            header("Location: valid_ref.php?hash=" . password_hash($hash, PASSWORD_DEFAULT));
+                        }
                     }
                 }
             }
         }
+        
     }
 
 ?>
@@ -82,7 +87,7 @@
         <form id="hashform" action="verif_hash.php" method="post">
             <div class="input-group">
                 <label for="register-lastname">Code</label>
-                <input type="text" id="hash" name="hash" required>
+                <input type="password" id="hash" name="hash" required>
             </div>
             <div class="center">
                 <button type="submit" class="btn">Entrer</button>

@@ -12,6 +12,8 @@
     $users = json_decode($data, true);
     $userData = json_decode(file_get_contents($users[$email]), true);
 
+    $message = "";
+
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Mise à jour des informations de l'utilisateur
         $lastname = $_POST['lastname'];
