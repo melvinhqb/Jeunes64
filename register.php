@@ -12,8 +12,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         mkdir('data', 0777, true);
     }
     $usersFile = 'users.json';
-    $usersData = file_get_contents($usersFile);
-    $users = json_decode($usersData, true);
+    if (file_exists($usersFile)) {
+        $usersData = file_get_contents($usersFile);
+        $users = json_decode($usersData, true);
+    } else {
+        $users = array(); // créer un tableau vide si le fichier n'existe pas
+    }
     $email = $_POST['email'];
     if (isset($users[$email])) {
         // Si l'email est déjà utilisé, affiche un message d'erreur

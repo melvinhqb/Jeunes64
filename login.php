@@ -8,25 +8,28 @@ if (isset($_SESSION['email'])) {
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $file = 'users.json';
-    $data = file_get_contents($file);
-    $users = json_decode($data, true);
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-    if (!file_exists('users.json')) {
+    if (!file_exists($file)) {
         $message = "L'email ou le mot de passe est incorrect.";
-    }
-    else if (array_key_exists($email, $users)) {
-        $userData = json_decode(file_get_contents($users[$email]), true);
-        $passwordHash = $userData['password'];
-        if (password_verify($password, $passwordHash)) {
-            $_SESSION['email'] = $email;
-            header("Location: profil.php");
+    } else {
+        $data = file_get_contents($file);
+        $users = json_decode($data, true);
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+        
+        if (array_key_exists($email, $users)) {
+            $userData = json_decode(file_get_contents($users[$email]), true);
+            $passwordHash = $userData['password'];
+            if (password_verify($password, $passwordHash)) {
+                $_SESSION['email'] = $email;
+                header("Location: profil.php");
+            } else {
+                $message = "L'email ou le mot de passe est incorrect.";
+            }
         } else {
             $message = "L'email ou le mot de passe est incorrect.";
         }
-    } else {
-        $message = "L'email ou le mot de passe est incorrect.";
     }
+
 }
 ?>
 
