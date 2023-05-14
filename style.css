@@ -109,12 +109,8 @@ h1.xl-title {
     text-transform: uppercase;
 }
 
-h1.xl-title.partner {
-    color: var(--dim-gray);
-}
-
-h1.xl-title.young {
-    color: var(--mexican-pink);
+h1.xl-title {
+    color: var(--main-color);
 }
 
 h2.slogan {

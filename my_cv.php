@@ -19,7 +19,7 @@
             </div>
             <div class="header-body">
                 <div class="header-logo">
-                    <a href="home.php"><img src="assets/logo-jeunes.png" alt="Logo Jeunes 6.4"></a>
+                    <a href="home.php"><img src="assets/logo1.png" alt="Logo Jeunes 6.4"></a>
                 </div>
                 <div class="header-text">
                         <h1 class="xl-title young">Jeune</h1>

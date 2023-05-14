@@ -76,7 +76,7 @@
             </div>
             <div class="header-body">
                 <div class="header-logo">
-                    <a href="home.php"><img src="assets/logo-jeunes.png" alt="Logo Jeunes 6.4"></a>
+                    <a href="home.php"><img src="assets/logo1.png" alt="Logo Jeunes 6.4"></a>
                 </div>
                 <div class="header-text">
                         <h1 class="xl-title young">Jeune</h1>
@@ -112,15 +112,15 @@
             <form action="edit_profil.php" method="post">
                 <div class="input-group">
                     <label for="lastname">Nom</label>
-                    <input type="text" name="lastname" value="<?php echo $userData['lastname']; ?>" required><br>
+                    <input type="text" name="lastname" value="<?php echo $userData['lastname']; ?>" required>
                 </div>
                 <div class="input-group">
                     <label for="firstname">Prénom</label>
-                    <input type="text" name="firstname" value="<?php echo $userData['firstname']; ?>" required><br>
+                    <input type="text" name="firstname" value="<?php echo $userData['firstname']; ?>" required>
                 </div>
                 <div class="input-group">
                     <label for="birth">Date de naissance</label>
-                    <input type="date" name="birth" value="<?php echo $userData['birth']; ?>" required><br>
+                    <input type="date" name="birth" value="<?php echo $userData['birth']; ?>" required>
                 </div>
                 <div class="input-group">
                     <label for="current-password">Mot de passe actuel</label>

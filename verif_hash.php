@@ -64,9 +64,8 @@
                     <a href="home.php"><img src="assets/logo1.png" alt="Logo Jeunes 6.4"></a>
                 </div>
                 <div class="header-text">
-                    <div class="header-slogan">
-                        <h2 class="slogan">Pour faire de l'engagement une valeur</h2>
-                    </div>
+                        <h1 class="xl-title referent">Référent</h1>
+                        <h2 class="slogan">Je confirme la valeur de ton engagement</h2>
                 </div>
             </div>
             <nav class="header-nav">
