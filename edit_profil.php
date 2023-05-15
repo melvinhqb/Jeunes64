@@ -97,10 +97,8 @@
         <div class="subnav">
             <div class="medium-container">
                 <ul class="subnav-list">
-                    <li class="subnav-item"><a class="subnav-link" href="profil.php">Mon profil</a></li>
-                    <li class="subnav-item"><a class="subnav-link" href="new_ref.php">Demande de référence</a></li>
-                    <li class="subnav-item active"><a class="subnav-link" href="edit_profil.php">Modifier mon profil</a></li>
-                    <li class="subnav-item"><a class="subnav-link" href="my_cv.php">Mon CV</a></li>
+                    <li class="subnav-item active"><a class="subnav-link" href="profil.php">Mon profil</a></li>
+		            <li class="subnav-item"><a class="subnav-link" href="references.php">Demande de référence</a></li>
                 </ul>
             </div>
         </div>

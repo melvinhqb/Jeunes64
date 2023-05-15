@@ -17,6 +17,7 @@
         $refFirstname = $_POST['referent-firstname'];
         $refBirth = $_POST['referent-birth'];
         $refEmail = $_POST['referent-email'];
+        $commitmentType = $_POST['commitment-type'];
         $description = $_POST['description'];
         $period = $_POST['period'];
 
@@ -64,6 +65,7 @@
             'firstname' => $refFirstname,
             'birth' => $refBirth,
             'email' => $refEmail,
+            'commitment-type' => $commitmentType,
             'description' => $description,
             'period' => $period,
             'skills' => $userSkills,
@@ -83,7 +85,7 @@
         file_put_contents($userJsonPath, json_encode($userData));
 
         // Redirection vers une autre page (par exemple, le tableau de bord) après l'enregistrement des données
-        header("Location: profil.php");
+        header("Location: references.php");
         exit();
     }
 
@@ -130,41 +132,43 @@
             <div class="medium-container">
                 <ul class="subnav-list">
                     <li class="subnav-item"><a class="subnav-link" href="profil.php">Mon profil</a></li>
-                    <li class="subnav-item active"><a class="subnav-link" href="new_ref.php">Demande de référence</a></li>
-                    <li class="subnav-item"><a class="subnav-link" href="edit_profil.php">Modifier mon profil</a></li>
-                    <li class="subnav-item"><a class="subnav-link" href="my_cv.php">Mon CV</a></li>
+		            <li class="subnav-item active"><a class="subnav-link" href="references.php">Demande de référence</a></li>
                 </ul>
             </div>
         </div>
         <div class="small-container">
-            <h1 class="main-title">Demande de référence</h1>
+            <h1 class="main-title">Nouvelle demande de référence</h1>
             <h3 class="h3-description">Décrivez votre expérience et mettez en avant ce que vous en avez retiré.</h3>
             <form action="new_ref.php" method="post">
                 <h2 class="subtitle">Coordonnées du référent</h2>
                 <div class="input-group">
                     <label for="referent-lastname">Nom</label>
-                    <input type="text" id="referent-lastname" name="referent-lastname" require>
+                    <input type="text" id="referent-lastname" name="referent-lastname" required>
                 </div>
                 <div class="input-group">
                     <label for="referent-firstname">Prénom</label>
-                    <input type="text" id="referent-firstname" name="referent-firstname" require>
+                    <input type="text" id="referent-firstname" name="referent-firstname" required>
                 </div>
                 <div class="input-group">
                     <label for="referent-birth">Date de naissance</label>
-                    <input type="date" id="referent-birth" name="referent-birth" require>
+                    <input type="date" id="referent-birth" name="referent-birth" required>
                 </div>
                 <div class="input-group">
                     <label for="referent-email">Email</label>
-                    <input type="email" id="referent-email" name="referent-email" require>
+                    <input type="email" id="referent-email" name="referent-email" required>
                 </div>
                 <h2 class="subtitle">Mon engagement</h2>
                 <div class="input-group">
-                    <label for="description">Description</label>
-                    <textarea name="description" id="description" rows="10"></textarea>
+                    <label for="commitment-type">Milieu de l'engagement</label>
+                    <input type="text" id="commitment-type" name="commitment-type" required>
                 </div>
                 <div class="input-group">
-                    <label for="period">Durée (en jours)</label>
-                    <input type="number" id="period" name="period" min=1 require>
+                    <label for="period">Durée (en mois)</label>
+                    <input type="number" id="period" name="period" min=1 required>
+                </div>
+                <div class="input-group">
+                    <label for="description">Description</label>
+                    <textarea name="description" id="description" rows="10" require></textarea>
                 </div>
                 <h2 class="subtitle">Mes savoirs être</h2>
                 <div class="checkbox-list">

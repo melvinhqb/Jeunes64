@@ -59,16 +59,21 @@
             <div class="medium-container">
                 <ul class="subnav-list">
                     <li class="subnav-item active"><a class="subnav-link" href="profil.php">Mon profil</a></li>
-                    <li class="subnav-item"><a class="subnav-link" href="new_ref.php">Demande de référence</a></li>
-                    <li class="subnav-item"><a class="subnav-link" href="edit_profil.php">Modifier mon profil</a></li>
-                    <li class="subnav-item"><a class="subnav-link" href="my_cv.php">Mon CV</a></li>
+		            <li class="subnav-item"><a class="subnav-link" href="references.php">Demande de référence</a></li>
                 </ul>
             </div>
         </div>
         <div class="medium-container">
             <h1 class="main-title">Bienvenue <?php echo $userData['firstname']; ?> <?php echo $userData['lastname']; ?> !</h1>
-            <p class="text">Email: <?php echo $userData['email']; ?></p>
-            <p class="text">Date de naissance: <?php echo $userData['birth']; ?></p>
+            <div class="title-btn">
+                <h2 class="subtitle">Mes informations personelles</h2>
+                <p class="text"><a href="edit_profil.php" class="link-btn"><i class="fa-solid fa-pen-to-square"></i> Modifier profil</a></p>
+            </div>
+            <div class="ref-info">
+                <p><i class="fa-solid fa-cake-candles color-icn"></i> <?php echo date("d M Y", strtotime($userData['birth'])); ?></p>
+                <p><i class="fa-solid fa-at color-icn"></i> <?php echo $userData['email']; ?></p>
+                <p><i class="fa-solid fa-phone color-icn"></i> Ajouter ce champ</p>
+            </div>
         </div>
     </section>
 </body>

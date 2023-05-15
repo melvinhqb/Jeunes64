@@ -125,7 +125,7 @@
         <div class="small-container">
             <form action="valid_ref.php" method="post">
                 <?php
-                    
+
                     $hash = $_GET['hash'];
 
                     $file = 'users.json';
