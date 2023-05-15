@@ -341,6 +341,10 @@ button {
     align-content: center;    
 }
 
+.text-center {
+    text-align: center;
+}
+
 /* index.html Page */
 
 section.index-part1{
