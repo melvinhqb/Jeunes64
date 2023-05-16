@@ -1,11 +1,82 @@
 <?php
-session_start();
+    session_start();
 
-if (isset($_SESSION['email'])) {
-    $message = '<a href="logout.php" class="link" id="logout-btn"><i class="fa-solid fa-right-from-bracket"></i> Se déconnecter</a>';
-} else {
-    $message = '<a href="login.php" class="link" id="login-btn">Se connecter</a><a href="register.php" class="link" id="register-btn">S\'inscrire</a>';
-}
+    if (isset($_SESSION['email'])) {
+        $message = '<a href="logout.php" class="link" id="logout-btn"><i class="fa-solid fa-right-from-bracket"></i> Se déconnecter</a>';
+    } else {
+        $message = '<a href="login.php" class="link" id="login-btn">Se connecter</a><a href="register.php" class="link" id="register-btn">S\'inscrire</a>';
+    }
+
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                
+        $file = 'users.json';
+        $data = file_get_contents($file);
+        $users = json_decode($data, true);
+        $email = $_POST['email'];
+        $hash = $_POST['hash'];
+        $refComment = $_POST['refComment'];
+
+        $userData = json_decode(file_get_contents($users[$email]), true);
+
+        foreach ($userData['references'] as $stockedHash => $reference) {
+            if ($stockedHash == $hash) {
+                $skills = $reference['skills'];
+                $skills['autonome']['refValue'] = (isset($_POST['autonome'])) ? $_POST['autonome'] : "off";
+                $skills['analyse']['refValue'] = (isset($_POST['analyse'])) ? $_POST['analyse'] : "off";
+                $skills['ecoute']['refValue'] = (isset($_POST['ecoute'])) ? $_POST['ecoute'] : "off";
+                $skills['organise']['refValue'] = (isset($_POST['organise'])) ? $_POST['organise'] : "off";
+                $skills['passionne']['refValue'] = (isset($_POST['passionne'])) ? $_POST['passionne'] : "off";
+                $skills['fiable']['refValue'] = (isset($_POST['fiable'])) ? $_POST['fiable'] : "off";
+                $skills['patient']['refValue'] = (isset($_POST['patient'])) ? $_POST['patient'] : "off";
+                $skills['reflechi']['refValue'] = (isset($_POST['reflechi'])) ? $_POST['reflechi'] : "off";
+                $skills['responsable']['refValue'] = (isset($_POST['responsable'])) ? $_POST['responsable'] : "off";
+                $skills['sociable']['refValue'] = (isset($_POST['sociable'])) ? $_POST['sociable'] : "off";
+                $skills['optimiste']['refValue'] = (isset($_POST['optimiste'])) ? $_POST['optimiste'] : "off";
+        
+                $skills['autonome']['name'] = "Autonome";
+                $skills['analyse']['name'] = "Capable d'analyse et de synthèse";
+                $skills['ecoute']['name'] = "À l'écoute";
+                $skills['organise']['name'] = "Organisé";
+                $skills['passionne']['name'] = "Passionné";
+                $skills['fiable']['name'] = "Fiable";
+                $skills['patient']['name'] = "Patient";
+                $skills['reflechi']['name'] = "Réfléchi";
+                $skills['responsable']['name'] = "Responsable";
+                $skills['sociable']['name'] = "Sociable";
+                $skills['optimiste']['name'] = "Optimiste";
+
+                $userSkills = [
+                    'autonome' => $skills['autonome'],
+                    'analyse' => $skills['analyse'],
+                    'ecoute' => $skills['ecoute'],
+                    'organise' => $skills['organise'],
+                    'passionne' => $skills['passionne'],
+                    'fiable' => $skills['fiable'],
+                    'patient' => $skills['patient'],
+                    'reflechi' => $skills['reflechi'],
+                    'responsable' => $skills['responsable'],
+                    'sociable' => $skills['sociable'],
+                    'optimiste' => $skills['optimiste'],
+                ];
+
+                $reference['skills'] = $userSkills;
+                $reference['verif'] = '1';
+                $reference['refComment'] = $refComment;
+
+
+                $userData['references'][$stockedHash] = $reference;
+
+                // Remplacement du caractère @ dans l'adresse e-mail par un tiret bas (_)
+                $userJsonFile = str_replace("@", "_", $email) . '.json'; // Nom du fichier JSON pour l'utilisateur
+                $userJsonPath = 'data/' . $userJsonFile; // Chemin d'accès au fichier JSON pour l'utilisateur
+
+                // Réécrire le fichier avec les données mises à jour
+                file_put_contents($userJsonPath, json_encode($userData));
+
+            }
+        }
+
+    }
 ?>
 
 <!DOCTYPE html>
