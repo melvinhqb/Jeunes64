@@ -42,6 +42,10 @@
     --main-color: var(--yellow-orange);
 }
 
+.grey {
+    --main-color: var(--silver);
+}
+
 /* General Styles */
 
 h1.main-title {
@@ -291,13 +295,22 @@ section#cards {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    gap: 2em;
+    gap: 1rem;
     justify-content: center;
     margin-top: 1em;
 }
 
+.partner__logo {
+    flex: 0 0 25%;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
 .partner__logo img{
-    max-height: 125px;
+    width: 100%;
+    aspect-ratio: 3/2;
+    object-fit: contain;
+    mix-blend-mode: color-burn;
 }
 
 /* Forms Styles */
@@ -344,10 +357,13 @@ section#cards {
     width: 45%;
 }
 
+.checkbox-group input[type=checkbox] {
+    margin: 0.5rem 0;
+}
+
 input[type=checkbox] {
     accent-color: var(--main-color);
     font-size: 1em;
-    margin: 0.5rem 0;
     zoom: 1.5;
 }
 
@@ -455,6 +471,10 @@ section.index-part2 .large-container{
     margin: 1rem 0;
 }
 
+#cv-box {
+    opacity: 0.5;
+}
+
 .two-columns {
     display: flex;
     flex-direction: row;
@@ -483,7 +503,7 @@ section.index-part2 .large-container{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-items: top;
+    align-items: start;
 }
 
 .reference-id {

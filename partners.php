@@ -55,6 +55,9 @@ if (isset($_SESSION['email'])) {
                 <li class="partner__logo"><a href=""><img src="assets/logo-msa.png" alt="Logo MSA"></a></li>
                 <li class="partner__logo"><a href=""><img src="assets/logo-assurance-maladie.png" alt="Logo "></a></li>
                 <li class="partner__logo"><a href=""><img src="assets/logo-universite-pau.png" alt=""></a></li>
+                <li class="partner__logo"><a href=""><img src="assets/logo-caf-bearn-soule.jpg" alt=""></a></li>
+                <li class="partner__logo"><a href=""><img src="assets/logo-caf-pays-basque.png" alt=""></a></li>
+                <li class="partner__logo"><a href=""><img src="assets/logo-assises-jeunesse.png" alt=""></a></li>
             </ul>
             <p class="text">
                 JEUNES 6.4 est un dispositif issu de la charte de l'engagement pour la jeunesse signée en 2013 par des partenaires institutionnels
