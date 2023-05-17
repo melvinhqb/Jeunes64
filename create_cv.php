@@ -109,7 +109,7 @@
                                         <div class="ref-info">
                                             <span><i class="fa-solid fa-cake-candles color-icn"></i> '. $refBirth_formattee .'</span>
                                             <span><i class="fa-solid fa-at color-icn"></i> '. $reference["email"] .'</span>
-                                            <span><i class="fa-solid fa-phone color-icn"></i> Ajouter ce champ</span>
+                                            <span><i class="fa-solid fa-phone color-icn"></i> '. $reference["tel"] .'</span>
                                         </div>
                                         <span></span>
                                     </div>
@@ -149,10 +149,12 @@
 
                         } 					
                     }
-                    echo '<div class="small-container">';
-                    echo '<div class="center">';
-                    echo '<button type="submit" class="btn">Ajouter au CV</button>';
-                    echo '</div></div></form>';
+                    if ($count != 0) {
+                        echo '<div class="small-container">';
+                        echo '<div class="center">';
+                        echo '<button type="submit" class="btn">Ajouter au CV</button>';
+                        echo '</div></div></form>';
+                    }
                     
                 } else {
                     echo "<p class='text'>Pas de références validées</p>";

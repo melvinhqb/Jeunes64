@@ -73,7 +73,7 @@
             <div class="ref-info">
                 <p><i class="fa-solid fa-cake-candles color-icn"></i> <?php echo date("d M Y", strtotime($userData['birth'])); ?></p>
                 <p><i class="fa-solid fa-at color-icn"></i> <?php echo $userData['email']; ?></p>
-                <p><i class="fa-solid fa-phone color-icn"></i> Ajouter ce champ</p>
+                <p><i class="fa-solid fa-phone color-icn"></i> <?php echo $userData['tel']; ?></p>
             </div>
         </div>
     </section>

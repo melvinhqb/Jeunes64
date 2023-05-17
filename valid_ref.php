@@ -81,6 +81,11 @@
                                     echo "<div class='input-group'><label>Email</label><input type='email' name='email' value='" . $userData['email'] . "' readonly></div>";
                                     echo "<div class='input-group'><label>Durée</label><input type='number' value='" . $reference['period'] . "' readonly></div>";
                                     echo "<div class='input-group'><label for='description'>Description</label><textarea name='description' id='description' rows='10' readonly>" . $reference['description'] . "</textarea></div>";
+                                    echo "<h2 class='subtitle'>Vos informations personelles</h2>";
+                                    echo '<div class="input-group"><label for="referent-lastname">Nom</label><input type="text" id="referent-lastname" name="referent-lastname" value="'.$reference["lastname"].'" required></div>';
+                                    echo '<div class="input-group"><label for="referent-firstname">Prénom</label><input type="text" id="referent-firstname" name="referent-firstname" value="'.$reference["firstname"].'" required></div>';
+                                    echo '<div class="input-group"><label for="referent-birth">Date de naissance</label><input type="date" id="referent-birth" name="referent-birth" value="'.$reference["birth"].'" required></div>';
+                                    echo '<div class="input-group"><label for="referent-tel">Téléphone</label><input type="tel" id="referent-tel" name="referent-tel" maxlength="10" value="'.$reference["tel"].'" required></div>';
                                     echo "<h2 class='subtitle'>Votre avis sur ce jeune</h2>";
                                     echo "<div class='checkbox-list'>";
                                     foreach ($reference['skills'] as $key => $skill) {

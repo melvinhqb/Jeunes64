@@ -26,6 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $lastname = $_POST['lastname'];
         $firstname = $_POST['firstname'];
         $birth = $_POST['birth'];
+        $tel = $_POST['tel'];
         $password = $_POST['password'];
         $passwordHash = password_hash($password, PASSWORD_DEFAULT);
         $userJsonFile = str_replace("@", "_", $email) . '.json'; // Nom du fichier JSON pour l'utilisateur
@@ -35,7 +36,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'password' => $passwordHash,
             'lastname' => $lastname,
             'firstname' => $firstname,
-            'birth' => $birth
+            'birth' => $birth,
+            'tel' => $tel
         );
         $users[$email] = $userJsonPath; // Ajoute l'association e-mail / chemin d'accès au fichier JSON dans le tableau des utilisateurs
         file_put_contents($usersFile, json_encode($users)); // Enregistre le tableau des utilisateurs dans le fichier users.json
@@ -100,6 +102,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="input-group">
                     <label for="register-email">Email</label>
                     <input type="email" id="register-email" name="email" required>
+                </div>
+                <div class="input-group">
+                    <label for="register-tel">Téléphone</label>
+                    <input type="tel" id="register-tel" name="tel" pattern="[0-9]{2} [0-9]{2} [0-9]{2} [0-9]{2} [0-9]{2}" required>
                 </div>
                 <div class="input-group">
                     <label for="register-password">Mot de passe</label>

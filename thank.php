@@ -15,6 +15,10 @@
         $email = $_POST['email'];
         $hash = $_POST['hash'];
         $refComment = $_POST['refComment'];
+        $refLastname = $_POST['referent-lastname'];
+        $refFirstname = $_POST['referent-firstname'];
+        $refBirth = $_POST['referent-birth'];
+        $refTel = $_POST['referent-tel'];
 
         $userData = json_decode(file_get_contents($users[$email]), true);
 
@@ -62,6 +66,10 @@
                 $reference['skills'] = $userSkills;
                 $reference['verif'] = '1';
                 $reference['refComment'] = $refComment;
+                $reference['lastname'] = $refLastname;
+                $reference['firstname'] = $refFirstname;
+                $reference['birth'] = $refBirth;
+                $reference['tel'] = $refTel;
 
 
                 $userData['references'][$stockedHash] = $reference;

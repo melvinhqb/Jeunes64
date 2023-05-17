@@ -112,7 +112,7 @@
 										<div class="ref-info">
 											<span><i class="fa-solid fa-cake-candles color-icn"></i> '. $refBirth_formattee .'</span>
 											<span><i class="fa-solid fa-at color-icn"></i> '. $reference["email"] .'</span>
-											<span><i class="fa-solid fa-phone color-icn"></i> Ajouter ce champ</span>
+											<span><i class="fa-solid fa-phone color-icn"></i> '. $reference["tel"] .'</span>
 										</div>
 									</div>
 								</div>
@@ -186,7 +186,7 @@
 										<div class="ref-info">
 											<span><i class="fa-solid fa-cake-candles color-icn"></i> '. $refBirth_formattee .'</span>
 											<span><i class="fa-solid fa-at color-icn"></i> '. $reference["email"] .'</span>
-											<span><i class="fa-solid fa-phone color-icn"></i> Ajouter ce champ</span>
+											<span><i class="fa-solid fa-phone color-icn"></i> '. $reference["tel"] .'</span>
 										</div>
 										<span></span>
 									</div>

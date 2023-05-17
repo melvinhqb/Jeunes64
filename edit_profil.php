@@ -19,6 +19,7 @@
         $lastname = $_POST['lastname'];
         $firstname = $_POST['firstname'];
         $birth = $_POST['birth'];
+        $tel = $_POST['tel'];
         $current_password = $_POST['current-password'];
         $new_password = $_POST['new-password'];
         if (!empty($current_password) && !empty($new_password)) {
@@ -30,6 +31,7 @@
                 $userData["lastname"] = $lastname;
                 $userData["firstname"] = $firstname;
                 $userData["birth"] = $birth;
+                $userData["tel"] = $tel;
                 
                 file_put_contents($userJsonPath, json_encode($userData)); // Enregistre les données de l'utilisateur dans le fichier JSON correspondant
                 $_SESSION['email'] = $email;
@@ -45,6 +47,7 @@
             $userData["lastname"] = $lastname;
             $userData["firstname"] = $firstname;
             $userData["birth"] = $birth;
+            $userData["tel"] = $tel;
             
             file_put_contents($userJsonPath, json_encode($userData)); // Enregistre les données de l'utilisateur dans le fichier JSON correspondant
             $_SESSION['email'] = $email;
@@ -120,6 +123,10 @@
                 <div class="input-group">
                     <label for="birth">Date de naissance</label>
                     <input type="date" name="birth" value="<?php echo $userData['birth']; ?>" required>
+                </div>
+                <div class="input-group">
+                    <label for="tel">Téléphone</label>
+                    <input type="tel" name="tel" maxlength="10" value="<?php echo $userData['tel']; ?>" required>
                 </div>
                 <div class="input-group">
                     <label for="current-password">Mot de passe actuel</label>

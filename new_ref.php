@@ -17,6 +17,7 @@
         $refFirstname = $_POST['referent-firstname'];
         $refBirth = $_POST['referent-birth'];
         $refEmail = $_POST['referent-email'];
+        $refTel = $_POST['referent-tel'];
         $commitmentType = $_POST['commitment-type'];
         $description = $_POST['description'];
         $period = $_POST['period'];
@@ -65,6 +66,7 @@
             'firstname' => $refFirstname,
             'birth' => $refBirth,
             'email' => $refEmail,
+            'tel' => $refTel,
             'commitment-type' => $commitmentType,
             'description' => $description,
             'period' => $period,
@@ -157,6 +159,10 @@
                 <div class="input-group">
                     <label for="referent-email">Email</label>
                     <input type="email" id="referent-email" name="referent-email" required>
+                </div>
+                <div class="input-group">
+                    <label for="referent-email">Téléphone</label>
+                    <input type="tel" id="referent-tel" name="referent-tel" required>
                 </div>
                 <h2 class="subtitle">Mon engagement</h2>
                 <div class="input-group">
