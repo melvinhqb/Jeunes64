@@ -13,6 +13,12 @@
 
     $userData = json_decode(file_get_contents($users[$email]), true);
 
+    $consultPageURL = 'http';
+    if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') {
+        $consultPageURL .= 's';
+    }
+    $consultPageURL .= '://' . $_SERVER['HTTP_HOST'] . '/consult.php?email=' . $email;
+
 ?>
 
 
@@ -75,7 +81,21 @@
                 <p><i class="fa-solid fa-at color-icn"></i> <?php echo $userData['email']; ?></p>
                 <p><i class="fa-solid fa-phone color-icn"></i> <?php echo $userData['tel']; ?></p>
             </div>
+            <h2 class="subtitle">Partager mon profil</h2>
+            <div class="copy-link-bar">
+                <input type="text" id="text-link" class="text-link" value="<?php echo $consultPageURL; ?>" readonly>
+                <button class="copy-button" id="copy-button">Copier</button>
+            </div>
+
         </div>
     </section>
+    <script>
+        document.getElementById("copy-button").addEventListener("click", function() {
+            var textInput = document.getElementById("text-link");
+            textInput.select();
+            document.execCommand("copy");
+            alert("Le texte a été copié dans le presse-papiers !");
+        });
+    </script>
 </body>
 </html>

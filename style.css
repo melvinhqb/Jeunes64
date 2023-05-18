@@ -543,6 +543,32 @@ p.legend {
     gap: 1rem;
 }
 
+/* Copy Link Bar */
+
+.copy-link-bar {
+    display: flex;
+    align-items: stretch;
+}
+
+.text-link {
+    flex-grow: 1;
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 8px 0 0 8px;
+    border: solid 1px var(--dim-gray); /* Retire la bordure */
+    outline: none; /* Retire l'effet de mise en évidence */
+    box-shadow: none; /* Retire l'ombre */
+    background-color: transparent; /* Définit la couleur de fond comme transparente */
+}
+
+.copy-button {
+    padding: 5px 10px;
+    font-size: 1rem;
+    margin: 0;
+    border: 1px #000 var(--main-color);
+    border-radius: 0px 8px 8px 0;
+}
+
 @media only screen and (max-width: 993px) {
     .large-container, .medium-container {
         width: 90%;
