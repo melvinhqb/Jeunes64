@@ -50,7 +50,7 @@
                 <ul class="nav-list">
                     <li class="nav-item young"><a class="nav-link" href="profil.php">Jeune</a></li>
                     <li class="nav-item referent active"><a class="nav-link" href="verif_hash.php">Référent</a></li>
-                    <li class="nav-item consultant"><a class="nav-link" href="">Consultant</a></li>
+                    <li class="nav-item consultant"><a class="nav-link" href="search_user.php">Consultant</a></li>
                     <li class="nav-item partner"><a class="nav-link" href="partners.php">Partenaires</a></li>
                 </ul>
             </nav>
@@ -85,7 +85,7 @@
                                     echo '<div class="input-group"><label for="referent-lastname">Nom</label><input type="text" id="referent-lastname" name="referent-lastname" value="'.$reference["lastname"].'" required></div>';
                                     echo '<div class="input-group"><label for="referent-firstname">Prénom</label><input type="text" id="referent-firstname" name="referent-firstname" value="'.$reference["firstname"].'" required></div>';
                                     echo '<div class="input-group"><label for="referent-birth">Date de naissance</label><input type="date" id="referent-birth" name="referent-birth" value="'.$reference["birth"].'" required></div>';
-                                    echo '<div class="input-group"><label for="referent-tel">Téléphone</label><input type="tel" id="referent-tel" name="referent-tel" maxlength="10" value="'.$reference["tel"].'" required></div>';
+                                    echo '<div class="input-group"><label for="referent-tel">Téléphone</label><input type="tel" id="register-tel" name="referent-tel" pattern="0[1-9](\d{2}){4}" value="'.$reference["tel"].'" required></div>';
                                     echo "<h2 class='subtitle'>Votre avis sur ce jeune</h2>";
                                     echo "<div class='checkbox-list'>";
                                     foreach ($reference['skills'] as $key => $skill) {

@@ -76,7 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <ul class="nav-list">
                     <li class="nav-item young active"><a class="nav-link" href="register.php">Jeune</a></li>
                     <li class="nav-item referent"><a class="nav-link" href="verif_hash.php">Référent</a></li>
-                    <li class="nav-item consultant"><a class="nav-link" href="">Consultant</a></li>
+                    <li class="nav-item consultant"><a class="nav-link" href="search_user.php">Consultant</a></li>
                     <li class="nav-item partner"><a class="nav-link" href="partners.php">Partenaires</a></li>
                 </ul>
             </nav>
@@ -104,8 +104,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <input type="email" id="register-email" name="email" required>
                 </div>
                 <div class="input-group">
-                    <label for="register-tel">Téléphone</label>
-                    <input type="tel" id="register-tel" name="tel" pattern="[0-9]{2} [0-9]{2} [0-9]{2} [0-9]{2} [0-9]{2}" required>
+                    <label for="register-tel">Numéro de téléphone</label>
+                    <input type="tel" id="register-tel" name="tel" pattern="0[1-9](\d{2}){4}" required>
                 </div>
                 <div class="input-group">
                     <label for="register-password">Mot de passe</label>

@@ -90,7 +90,7 @@
                 <ul class="nav-list">
                     <li class="nav-item young active"><a class="nav-link" href="profil.php">Jeune</a></li>
                     <li class="nav-item referent"><a class="nav-link" href="verif_hash.php">Référent</a></li>
-                    <li class="nav-item consultant"><a class="nav-link" href="">Consultant</a></li>
+                    <li class="nav-item consultant"><a class="nav-link" href="search_user.php">Consultant</a></li>
                     <li class="nav-item partner"><a class="nav-link" href="partners.php">Partenaires</a></li>
                 </ul>
             </nav>
@@ -126,7 +126,7 @@
                 </div>
                 <div class="input-group">
                     <label for="tel">Téléphone</label>
-                    <input type="tel" name="tel" maxlength="10" value="<?php echo $userData['tel']; ?>" required>
+                    <input type="tel" id="register-tel" name="tel" pattern="0[1-9](\d{2}){4}" value="<?php echo $userData['tel']; ?>" required>
                 </div>
                 <div class="input-group">
                     <label for="current-password">Mot de passe actuel</label>

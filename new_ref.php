@@ -123,7 +123,7 @@
                 <ul class="nav-list">
                     <li class="nav-item young active"><a class="nav-link" href="profil.php">Jeune</a></li>
                     <li class="nav-item referent"><a class="nav-link" href="verif_hash.php">Référent</a></li>
-                    <li class="nav-item consultant"><a class="nav-link" href="">Consultant</a></li>
+                    <li class="nav-item consultant"><a class="nav-link" href="search_user.php">Consultant</a></li>
                     <li class="nav-item partner"><a class="nav-link" href="partners.php">Partenaires</a></li>
                 </ul>
             </nav>
@@ -162,7 +162,7 @@
                 </div>
                 <div class="input-group">
                     <label for="referent-email">Téléphone</label>
-                    <input type="tel" id="referent-tel" name="referent-tel" required>
+                    <input type="tel" id="referent-tel" name="referent-tel" pattern="0[1-9](\d{2}){4}" required>
                 </div>
                 <h2 class="subtitle">Mon engagement</h2>
                 <div class="input-group">
