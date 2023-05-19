@@ -17,7 +17,7 @@
     if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') {
         $consultPageURL .= 's';
     }
-    $consultPageURL .= '://' . $_SERVER['HTTP_HOST'] . '/consult.php?email=' . $email;
+    $consultPageURL .= '://' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']) . '/consult.php?email=' . $email;
 
 ?>
 
