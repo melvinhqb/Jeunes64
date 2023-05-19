@@ -202,14 +202,14 @@ h2.slogan {
 }
 
 .nav-item {
-    padding: 1em;
+    padding: 1em 0;
 }
 
 .nav-link {
     font-size: 14pt;
     text-transform: uppercase;
     text-decoration: none;
-    padding: 1em;
+    padding: 1em 2em;
     font-weight: 900;
 }
 
