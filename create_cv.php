@@ -36,8 +36,8 @@
 		            <a href="home.php"><img src="assets/logo1.png" alt="Logo Jeunes 6.4"></a>
 		        </div>
 		        <div class="header-text">
-		                <h1 class="xl-title young">Jeune</h1>
-		                <h2 class="slogan">Je donne de la valeur à mon engagement</h2>
+                    <h1 class="xl-title young">Jeune</h1>
+                    <h2 class="slogan">Je donne de la valeur à mon engagement</h2>
 		        </div>
 		    </div>
 		    <nav class="header-nav">
@@ -142,32 +142,46 @@
                                     <h4>Commentaire du référent</h4>
                                     <p class="box-text">'.$reference['refComment'].'</p>
                                 </div>
-                                <div class="reference-id">
-                                    <p class="legend">'.$key.'</p>
-                                </div>
                             </div>';
-
-                        } 					
+                        }
                     }
                     if ($count != 0) {
                         echo '<div class="small-container">';
                         echo '<div class="center">';
-                        echo '<button type="submit" class="btn">Ajouter au CV</button>';
+                        echo '<button type="submit" class="btn" id="btn-send">Ajouter au CV</button>';
                         echo '</div></div></form>';
-                    }
-                    
+                    }    
                 } else {
                     echo "<p class='text'>Pas de références validées</p>";
                 }
-
             ?>
 		</div>
 	    </section>
         <script>
+            window.addEventListener('pageshow', function(event) {
+                // Réinitialiser toutes les cases à cocher
+                var checkboxes = document.getElementsByClassName('checkmark');
+                for (var i = 0; i < checkboxes.length; i++) {
+                    checkboxes[i].checked = false;
+                    checkboxes[i].parentElement.classList.add('grey');
+                    checkboxes[i].parentElement.classList.remove('green');
+                    checkboxes[i].parentElement.style.opacity = 0.5;
+                }
+
+                // Désactiver le bouton d'envoi
+                document.getElementById("btn-send").disabled = true;
+                document.getElementById("btn-send").classList.add("grey-button");
+            });
+
+
+            document.getElementById("btn-send").disabled = true;
+            document.getElementById("btn-send").classList.add("grey-button");
 
             // Récupérer toutes les cases à cocher
             var checkboxes = document.getElementsByClassName('checkmark');
 
+            // Compter cases cochées
+            var count_checked = 0;
             // Parcourir toutes les cases à cocher
             for (var i = 0; i < checkboxes.length; i++) {
 
@@ -178,6 +192,7 @@
 
                 // Vérifier si la case à cocher est cochée
                 if (this.checked) {
+                    count_checked++;
                     // Parcourir les trois générations de parents
                     for (var j = 0; j < 3; j++) {
 
@@ -193,6 +208,7 @@
                         parentDiv = parentDiv.parentElement;
                     }
                 } else {
+                    count_checked--;
                     // Parcourir les trois générations de parents
                     for (var j = 0; j < 3; j++) {
                         // Vérifier si le parent a l'ID "cv-box"
@@ -207,7 +223,15 @@
                     parentDiv = parentDiv.parentElement;
                 }
                 }
-            });
+
+                    if(count_checked == 0) {
+                        document.getElementById("btn-send").disabled = true;
+                        document.getElementById("btn-send").classList.add("grey-button");
+                    } else {
+                        document.getElementById("btn-send").disabled = false;
+                        document.getElementById("btn-send").classList.remove("grey-button");
+                    }
+                });
             }
         </script>
 	</body>

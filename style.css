@@ -573,6 +573,12 @@ p.legend {
     border-radius: 0px 8px 8px 0;
 }
 
+.grey-button {
+    background-color: gray;
+    color: white;
+    cursor: not-allowed;
+  }
+
 /* Delete Button */
 
 .del-btn {
@@ -632,5 +638,11 @@ section.mycv {
 
     #logo-slogan {
         font-size: 12pt;
+    }
+}
+
+@media print {
+    .hide-on-print {
+        display: none !important;
     }
 }

@@ -79,6 +79,7 @@
                                     echo "<div class='input-group'><label>Prénom</label><input type='text' value='" . $userData['firstname'] . "' readonly></div>";
                                     echo "<div class='input-group'><label>Date de naissance</label><input type='date' value='" . $userData['birth'] . "' readonly></div>";
                                     echo "<div class='input-group'><label>Email</label><input type='email' name='email' value='" . $userData['email'] . "' readonly></div>";
+                                    echo "<div class='input-group'><label>Milieu de l'engagement</label><input type='text' value='" . $reference['commitment-type'] . "' readonly></div>";
                                     echo "<div class='input-group'><label>Durée</label><input type='number' value='" . $reference['period'] . "' readonly></div>";
                                     echo "<div class='input-group'><label for='description'>Description</label><textarea name='description' id='description' rows='10' readonly>" . $reference['description'] . "</textarea></div>";
                                     echo "<h2 class='subtitle'>Vos informations personelles</h2>";
