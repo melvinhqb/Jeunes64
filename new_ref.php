@@ -12,6 +12,9 @@
     $userData = json_decode(file_get_contents($users[$email]), true);
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+        $checkedValues = [];
+        
         // Collecte des informations du formulaire
         $refLastname = $_POST['referent-lastname'];
         $refFirstname = $_POST['referent-firstname'];
@@ -83,8 +86,32 @@
         // Ajouter les nouvelles données à la suite des données existantes
         $userData['references'][$newRefHash] = $newReference;
 
+        // Lien de validation
+        $consultPageURL = 'http';
+        if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') {
+            $consultPageURL .= 's';
+        }
+        $consultPageURL .= '://' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']) . '/valid_ref.php?hash=' . password_hash($newRefHash, PASSWORD_DEFAULT);
+    
+
         // Réécrire le fichier avec les données mises à jour
         file_put_contents($userJsonPath, json_encode($userData));
+
+        $receiver = $refEmail;
+        $subject = "Demande de référence de ". $userData['firstname'] . " " . $userData['lastname'];
+        $body = "Cher " . $newReference["firstname"] . ",\n\n";
+        $body .= "Le jeune " . $userData['firstname'] . " " . $userData['lastname'] . " a utilisé notre site et vous a désigné comme référent. ";
+        $body .= "Pour valider sa référence, il vous suffit de cliquer sur le lien suivant ou de saisir le code de validation :\n\n";
+        $body .= "Lien de validation : " . $consultPageURL . "\n";
+        $body .= "Code de validation : " . $newRefHash . "\n\n";
+        $body .= "Cordialement,\nL'équipe Jeunes 64";
+        $sender = "From:melvinhqb@gmail.com";
+        
+        if(mail($receiver, $subject, $body, $sender)){
+            echo "Email sent successfully to $receiver";
+        }else{
+            echo "Sorry, failed while sending mail!";
+        }
 
         // Redirection vers une autre page (par exemple, le tableau de bord) après l'enregistrement des données
         header("Location: references.php");
@@ -231,4 +258,23 @@
         </div>
 	</section>
 </body>
+<script>
+    // Sélectionner toutes les cases à cocher
+    const checkboxes = document.querySelectorAll('.checkbox-group input[type="checkbox"]');
+    let checkedCount = 0;
+
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', () => {
+            if (checkbox.checked) {
+                checkedCount++;
+                if (checkedCount > 4) {
+                    checkbox.checked = false; // Désélectionner la case cochée supplémentaire
+                    checkedCount--; // Décrémenter le compteur
+                }
+            } else {
+                checkedCount--;
+            }
+        });
+    });
+</script>
 </html>

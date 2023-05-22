@@ -81,6 +81,17 @@
                 // Réécrire le fichier avec les données mises à jour
                 file_put_contents($userJsonPath, json_encode($userData));
 
+                // Envoyer un mail récap
+                $receiver = $reference["email"];
+                $subject = "Confirmation référence traitée";
+                $body = "Cher " . $reference["firstname"] . ",\n\n";
+                $body .= "Vous venez de valider la demande de référence de " . $userData['firstname'] . " " . $userData['lastname'] . ", et nous vous remerçions.\n\n";
+                //$body .= "Voici un récapitulatif :\n\n(Ajouter récap ultérieurment)\n\n";
+                $body .= "Cordialement,\nL'équipe Jeunes 64";
+                $sender = "From:melvinhqb@gmail.com";
+                
+                mail($receiver, $subject, $body, $sender);
+                break;
             }
         }
 

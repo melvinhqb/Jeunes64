@@ -1,30 +1,19 @@
-# Lancement du site web avec XAMPP
+## Jeunes 6.4
 
-Ce guide explique les étapes nécessaires pour lancer un site web en utilisant XAMPP.
+<div style="text-align:center">
+<img src="assets/logo1.png" width="50%">
+</div>
 
-## Étapes pour lancer le site web
+## Objectif
 
-1. Téléchargement et installation de XAMPP :
+Le projet Jeunes 6.4 est un dispositif de valorisation de l’engagement des jeunes en
+Pyrénées-Atlantiques soutenu par l’État, le Conseil Général, le Conseil Régional, les CAF Béarn-Soule et Pays Basque, la MSA, la CPAM.
 
-   - Rendez-vous sur le site officiel de XAMPP à l'adresse [https://www.apachefriends.org/index.html](https://www.apachefriends.org/index.html).
-   - Téléchargez la dernière version de XAMPP pour votre système d'exploitation.
-   - Exécutez le programme d'installation et suivez les instructions pour installer XAMPP sur votre machine.
+Le projet, adressé aux jeunes entre 16 et 30 ans, vise à valoriser toute expérience comme source d’enrichissement qui puisse être reconnue comme l’expression d’un savoir faire ou savoir être.
 
-2. Déployer votre site web :
-    - Téléchargez le dossier du site web
-   - Déplacez le dossier du site web dans le dossier "htdocs" de XAMPP. Le chemin d'accès typique de ce dossier est :
-     - Sur Windows : C:\xampp\htdocs\
-     - Sur macOS : /Applications/XAMPP/htdocs/
-     - Sur Linux : /opt/lampp/htdocs/
+Le but de ce projet est de réaliser un site web permettant à des jeunes de valoriser leur savoir-faire et savoir-être. Afin de compléter leur CV, les jeunes peuvent demander des 1 références qui confirment leur expérience (clubs de sport, bénévolat, services à domiciles, etc.). Ces références pourront être consultées par un recruteur potentiel (le Consultant).
 
-3. Lancement du serveur Apache :
+## Prérequis
 
-   - Démarrez XAMPP sur votre machine.
-   - Dans l'interface de XAMPP Control Panel, cliquez sur le bouton "Start" à côté du module Apache pour démarrer le serveur.
-
-4. Accéder à votre site web :
-
-   - Ouvrez un navigateur web.
-   - Dans la barre d'adresse, saisissez http://localhost/Jeunes64 pour accéder à la page d'accueil du siet web.
-
-Note : Pour assurer une protection appropriée des fichiers, il est recommandé de configurer le fichier .htaccess. Le fichier .htaccess permet de restreindre l'accès aux fichiers sensibles. Le fichier .htaccess permet ici de limiter l'accès aux fichiers JSON mais peut être utilisé pour toute autre configuration de sécurité requise.
+1. [Installation de XAMPP](docs/config_xampp.md)
+2. [Configuration de la messagerie depuis XAMPP](docs/config_mail.md)

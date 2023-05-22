@@ -11,6 +11,30 @@
     $data = file_get_contents($file);
     $users = json_decode($data, true);
     $userData = json_decode(file_get_contents($users[$email]), true);
+
+	// Function to remove a reference request from the JSON file
+	function removeReference($referenceKey, &$userData) {
+		if (isset($userData['references']) && !empty($userData['references'])) {
+			if (array_key_exists($referenceKey, $userData['references'])) {
+				unset($userData['references'][$referenceKey]);
+				return true;
+			}
+		}
+		return false;
+	}
+
+	// Check if the reference request should be removed
+	if (isset($_GET['remove']) && !empty($_GET['remove'])) {
+		$referenceKey = $_GET['remove'];
+		$removed = removeReference($referenceKey, $userData);
+		if ($removed) {
+			// Save the updated user data back to the JSON file
+			file_put_contents($users[$email], json_encode($userData));
+			// Redirect to the same page to reflect the changes
+			header("Location: references.php");
+			exit();
+		}
+	}
 ?>
 
 <!DOCTYPE html>
@@ -131,8 +155,9 @@
 									<div class="column referent">
 									</div>
 								</div>
-								<div class="reference-id">
+								<div class="del-btn">
 									<p class="legend">'.$key.'</p>
+									<a href="#" class="delete-link" onclick="confirmDeletion(\''.$key.'\')"><i class="fa-solid fa-trash"></i></a>
 								</div>
 							</div>';
 
@@ -219,8 +244,9 @@
 									<h4>Commentaire du référent</h4>
 									<p class="box-text">'.$reference['refComment'].'</p>
 								</div>
-								<div class="reference-id">
+								<div class="del-btn">
 									<p class="legend">'.$key.'</p>
+									<a href="#" class="delete-link" onclick="confirmDeletion(\''.$key.'\')"><i class="fa-solid fa-trash"></i></a>
 								</div>
 							</div>
 							';
@@ -235,5 +261,14 @@
 
 		</div>
 	    </section>
+		<script>
+		function confirmDeletion(referenceKey) {
+			if (confirm("Êtes-vous sûr de vouloir supprimer cette demande de référence ?")) {
+				// L'utilisateur a confirmé la suppression, effectuer l'action
+				window.location.href = 'references.php?remove=' + referenceKey;
+			}
+		}
+		</script>
+
 	</body>
 </html>
