@@ -1,12 +1,15 @@
 <?php
     session_start();
 
+    // Vérifier si l'email de l'utilisateur est défini dans la session
     if (!isset($_SESSION['email'])) {
-        header("Location: login.php"); // Rediriger vers la page de connexion si l'utilisateur n'est pas connecté
+        // Rediriger vers la page de connexion si l'utilisateur n'est pas connecté
+        header("Location: login.php");
         exit();
     }
 
-    $email = $_SESSION['email']; // Récupérer les informations de l'utilisateur courant
+    // Récupérer les informations de l'utilisateur courant
+    $email = $_SESSION['email'];
     $file = 'users.json';
     $data = file_get_contents($file);
     $users = json_decode($data, true);
@@ -22,40 +25,43 @@
         $tel = $_POST['tel'];
         $current_password = $_POST['current-password'];
         $new_password = $_POST['new-password'];
+
         if (!empty($current_password) && !empty($new_password)) {
+            // Vérification du mot de passe actuel
             if (password_verify($current_password, $userData["password"])) {
+                // Mise à jour du mot de passe
                 $userData["password"] = password_hash($new_password, PASSWORD_DEFAULT);
+
                 $userJsonFile = str_replace("@", "_", $email) . '.json'; // Nom du fichier JSON pour l'utilisateur
                 $userJsonPath = 'data/' . $userJsonFile; // Chemin d'accès au fichier JSON pour l'utilisateur
 
+                // Mise à jour des autres informations de l'utilisateur
                 $userData["lastname"] = $lastname;
                 $userData["firstname"] = $firstname;
                 $userData["birth"] = $birth;
                 $userData["tel"] = $tel;
-                
+
                 file_put_contents($userJsonPath, json_encode($userData)); // Enregistre les données de l'utilisateur dans le fichier JSON correspondant
                 $_SESSION['email'] = $email;
                 header("Location: profil.php");
-                //$message = "Vos informations ont été mis à jour.";
             } else {
                 $message = "Le mot de passe actuel est incorrect.";
             }
         } else {
             $userJsonFile = str_replace("@", "_", $email) . '.json'; // Nom du fichier JSON pour l'utilisateur
             $userJsonPath = 'data/' . $userJsonFile; // Chemin d'accès au fichier JSON pour l'utilisateur
-    
+
+            // Mise à jour des informations de l'utilisateur
             $userData["lastname"] = $lastname;
             $userData["firstname"] = $firstname;
             $userData["birth"] = $birth;
             $userData["tel"] = $tel;
-            
+
             file_put_contents($userJsonPath, json_encode($userData)); // Enregistre les données de l'utilisateur dans le fichier JSON correspondant
             $_SESSION['email'] = $email;
             header("Location: profil.php");
-            //$message = "Vos informations ont été mis à jour.";
         }
     }
-
 ?>
 
 <!DOCTYPE html>

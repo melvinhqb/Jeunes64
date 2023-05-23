@@ -1,24 +1,27 @@
 <?php
     session_start();
 
+    // Vérifier si l'email de l'utilisateur est défini dans la session
     if (!isset($_SESSION['email'])) {
-        header("Location: login.php"); // Rediriger vers la page de connexion si l'utilisateur n'est pas connecté
+        // Rediriger vers la page de connexion s'il n'est pas connecté
+        header("Location: login.php");
         exit();
     }
 
-    $email = $_SESSION['email']; // Récupérer les informations de l'utilisateur courant
+    $email = $_SESSION['email'];
     $file = 'users.json';
     $data = file_get_contents($file);
     $users = json_decode($data, true);
 
+    // Obtenir les données de l'utilisateur à partir du fichier JSON
     $userData = json_decode(file_get_contents($users[$email]), true);
 
+    // Construire l'URL de la page de consultation
     $consultPageURL = 'http';
     if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') {
         $consultPageURL .= 's';
     }
     $consultPageURL .= '://' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']) . '/consult.php?email=' . $email;
-
 ?>
 
 
@@ -73,7 +76,7 @@
         <div class="medium-container">
             <h1 class="main-title">Bienvenue <?php echo $userData['firstname']; ?> <?php echo $userData['lastname']; ?> !</h1>
             <div class="title-btn">
-                <h2 class="subtitle">Mes informations personelles</h2>
+                <h2 class="subtitle">Mes informations personnelles</h2>
                 <p class="text"><a href="edit_profil.php" class="link-btn"><i class="fa-solid fa-pen-to-square"></i> Modifier profil</a></p>
             </div>
             <div class="ref-info">

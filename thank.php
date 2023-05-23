@@ -1,6 +1,7 @@
 <?php
     session_start();
 
+    // Vérifie si une session avec l'email est déjà active
     if (isset($_SESSION['email'])) {
         $message = '<a href="logout.php" class="link" id="logout-btn"><i class="fa-solid fa-right-from-bracket"></i> Se déconnecter</a>';
     } else {
@@ -8,10 +9,10 @@
     }
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                
         $file = 'users.json';
         $data = file_get_contents($file);
         $users = json_decode($data, true);
+
         $email = $_POST['email'];
         $hash = $_POST['hash'];
         $refComment = $_POST['refComment'];
@@ -24,6 +25,7 @@
 
         foreach ($userData['references'] as $stockedHash => $reference) {
             if ($stockedHash == $hash) {
+                // Mise à jour des compétences de la référence
                 $skills = $reference['skills'];
                 $skills['autonome']['refValue'] = (isset($_POST['autonome'])) ? $_POST['autonome'] : "off";
                 $skills['analyse']['refValue'] = (isset($_POST['analyse'])) ? $_POST['analyse'] : "off";
@@ -36,7 +38,8 @@
                 $skills['responsable']['refValue'] = (isset($_POST['responsable'])) ? $_POST['responsable'] : "off";
                 $skills['sociable']['refValue'] = (isset($_POST['sociable'])) ? $_POST['sociable'] : "off";
                 $skills['optimiste']['refValue'] = (isset($_POST['optimiste'])) ? $_POST['optimiste'] : "off";
-        
+
+                // Mise à jour des noms des compétences
                 $skills['autonome']['name'] = "Autonome";
                 $skills['analyse']['name'] = "Capable d'analyse et de synthèse";
                 $skills['ecoute']['name'] = "À l'écoute";
@@ -49,6 +52,7 @@
                 $skills['sociable']['name'] = "Sociable";
                 $skills['optimiste']['name'] = "Optimiste";
 
+                // Création d'un tableau des compétences mises à jour
                 $userSkills = [
                     'autonome' => $skills['autonome'],
                     'analyse' => $skills['analyse'],
@@ -63,6 +67,7 @@
                     'optimiste' => $skills['optimiste'],
                 ];
 
+                // Mise à jour des données de la référence
                 $reference['skills'] = $userSkills;
                 $reference['verif'] = '1';
                 $reference['refComment'] = $refComment;
@@ -71,7 +76,7 @@
                 $reference['birth'] = $refBirth;
                 $reference['tel'] = $refTel;
 
-
+                // Mise à jour des données utilisateur
                 $userData['references'][$stockedHash] = $reference;
 
                 // Remplacement du caractère @ dans l'adresse e-mail par un tiret bas (_)
@@ -81,22 +86,21 @@
                 // Réécrire le fichier avec les données mises à jour
                 file_put_contents($userJsonPath, json_encode($userData));
 
-                // Envoyer un mail récap
+                // Envoyer un mail de confirmation à la référence
                 $receiver = $reference["email"];
                 $subject = "Confirmation référence traitée";
                 $body = "Cher " . $reference["firstname"] . ",\n\n";
-                $body .= "Vous venez de valider la demande de référence de " . $userData['firstname'] . " " . $userData['lastname'] . ", et nous vous remerçions.\n\n";
-                //$body .= "Voici un récapitulatif :\n\n(Ajouter récap ultérieurment)\n\n";
+                $body .= "Vous venez de valider la demande de référence de " . $userData['firstname'] . " " . $userData['lastname'] . ", et nous vous remercions.\n\n";
                 $body .= "Cordialement,\nL'équipe Jeunes 64";
-                $sender = "From:melvinhqb@gmail.com";
-                
+                $sender = "From: melvinhqb@gmail.com";
+
                 mail($receiver, $subject, $body, $sender);
                 break;
             }
         }
-
     }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">

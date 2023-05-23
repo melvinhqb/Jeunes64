@@ -1,52 +1,61 @@
 <?php
+    session_start();
 
-session_start();
-
-if (isset($_SESSION['email'])) {
-    header("Location: profil.php");
-    exit;
-}
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (!file_exists('data')) {
-        mkdir('data', 0777, true);
-    }
-    $usersFile = 'users.json';
-    if (file_exists($usersFile)) {
-        $usersData = file_get_contents($usersFile);
-        $users = json_decode($usersData, true);
-    } else {
-        $users = array(); // créer un tableau vide si le fichier n'existe pas
-    }
-    $email = $_POST['email'];
-    if (isset($users[$email])) {
-        // Si l'email est déjà utilisé, affiche un message d'erreur
-        $message = "Cet email est déjà utilisé. Veuillez en choisir un autre.";
-    } else {
-        $lastname = $_POST['lastname'];
-        $firstname = $_POST['firstname'];
-        $birth = $_POST['birth'];
-        $tel = $_POST['tel'];
-        $password = $_POST['password'];
-        $passwordHash = password_hash($password, PASSWORD_DEFAULT);
-        $userJsonFile = str_replace("@", "_", $email) . '.json'; // Nom du fichier JSON pour l'utilisateur
-        $userJsonPath = 'data/' . $userJsonFile; // Chemin d'accès au fichier JSON pour l'utilisateur
-        $userData = array(
-            'email' => $email,
-            'password' => $passwordHash,
-            'lastname' => $lastname,
-            'firstname' => $firstname,
-            'birth' => $birth,
-            'tel' => $tel
-        );
-        $users[$email] = $userJsonPath; // Ajoute l'association e-mail / chemin d'accès au fichier JSON dans le tableau des utilisateurs
-        file_put_contents($usersFile, json_encode($users)); // Enregistre le tableau des utilisateurs dans le fichier users.json
-        file_put_contents($userJsonPath, json_encode($userData)); // Enregistre les données de l'utilisateur dans le fichier JSON correspondant
-        $_SESSION['email'] = $email;
+    if (isset($_SESSION['email'])) {
+        // Si l'utilisateur est déjà connecté, redirige vers la page de profil
         header("Location: profil.php");
+        exit;
     }
-}
 
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if (!file_exists('data')) {
+            // Crée le répertoire 'data' s'il n'existe pas
+            mkdir('data', 0777, true);
+        }
+
+        $usersFile = 'users.json';
+        if (file_exists($usersFile)) {
+            // Si le fichier users.json existe, charge son contenu
+            $usersData = file_get_contents($usersFile);
+            $users = json_decode($usersData, true);
+        } else {
+            $users = array(); // Crée un tableau vide si le fichier n'existe pas
+        }
+
+        $email = $_POST['email'];
+
+        if (isset($users[$email])) {
+            // Si l'email est déjà utilisé, affiche un message d'erreur
+            $message = "Cet email est déjà utilisé. Veuillez en choisir un autre.";
+        } else {
+            $lastname = $_POST['lastname'];
+            $firstname = $_POST['firstname'];
+            $birth = $_POST['birth'];
+            $tel = $_POST['tel'];
+            $password = $_POST['password'];
+            $passwordHash = password_hash($password, PASSWORD_DEFAULT);
+
+            $userJsonFile = str_replace("@", "_", $email) . '.json'; // Nom du fichier JSON pour l'utilisateur
+            $userJsonPath = 'data/' . $userJsonFile; // Chemin d'accès au fichier JSON pour l'utilisateur
+
+            $userData = array(
+                'email' => $email,
+                'password' => $passwordHash,
+                'lastname' => $lastname,
+                'firstname' => $firstname,
+                'birth' => $birth,
+                'tel' => $tel
+            );
+
+            $users[$email] = $userJsonPath; // Ajoute l'association email / chemin d'accès au fichier JSON dans le tableau des utilisateurs
+
+            file_put_contents($usersFile, json_encode($users)); // Enregistre le tableau des utilisateurs dans le fichier users.json
+            file_put_contents($userJsonPath, json_encode($userData)); // Enregistre les données de l'utilisateur dans le fichier JSON correspondant
+
+            $_SESSION['email'] = $email;
+            header("Location: profil.php");
+        }
+    }
 ?>
 
 <!DOCTYPE html>

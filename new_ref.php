@@ -1,21 +1,23 @@
 <?php
     session_start();
 
+    // Vérifier si l'email de l'utilisateur est défini dans la session
     if (!isset($_SESSION['email'])) {
+        // Rediriger vers la page de connexion s'il n'est pas connecté
         header("Location: login.php");
+        exit();
     }
 
     $email = $_SESSION['email'];
     $file = 'users.json';
     $data = file_get_contents($file);
     $users = json_decode($data, true);
+
+    // Obtenir les données de l'utilisateur à partir du fichier JSON
     $userData = json_decode(file_get_contents($users[$email]), true);
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
-        $checkedValues = [];
-        
-        // Collecte des informations du formulaire
+        // Récupération des données du formulaire
         $refLastname = $_POST['referent-lastname'];
         $refFirstname = $_POST['referent-firstname'];
         $refBirth = $_POST['referent-birth'];
@@ -25,45 +27,18 @@
         $description = $_POST['description'];
         $period = $_POST['period'];
 
-        $autonome['value'] = (isset($_POST['autonome'])) ? $_POST['autonome'] : "off";
-        $analyse['value'] = (isset($_POST['analyse'])) ? $_POST['analyse'] : "off";
-        $ecoute['value'] = (isset($_POST['ecoute'])) ? $_POST['ecoute'] : "off";
-        $organise['value'] = (isset($_POST['organise'])) ? $_POST['organise'] : "off";
-        $passionne['value'] = (isset($_POST['passionne'])) ? $_POST['passionne'] : "off";
-        $fiable['value'] = (isset($_POST['fiable'])) ? $_POST['fiable'] : "off";
-        $patient['value'] = (isset($_POST['patient'])) ? $_POST['patient'] : "off";
-        $reflechi['value'] = (isset($_POST['reflechi'])) ? $_POST['reflechi'] : "off";
-        $responsable['value'] = (isset($_POST['responsable'])) ? $_POST['responsable'] : "off";
-        $sociable['value'] = (isset($_POST['sociable'])) ? $_POST['sociable'] : "off";
-        $optimiste['value'] = (isset($_POST['optimiste'])) ? $_POST['optimiste'] : "off";
+        // Définition des compétences et de leurs noms
+        $skills = ['autonome', 'analyse', 'ecoute', 'organise', 'passionne', 'fiable', 'patient', 'reflechi', 'responsable', 'sociable', 'optimiste'];
+        $nameSkills = ['Autonome', 'Capable d\'analyse et de synthèse', 'À l\'écoute', 'Organisé', 'Passionné', 'Fiable', 'Patient', 'Réfléchi', 'Responsable', 'Sociable', 'Optimiste'];
 
-        $autonome['name'] = "Autonome";
-        $analyse['name'] = "Capable d'analyse et de synthèse";
-        $ecoute['name'] = "À l'écoute";
-        $organise['name'] = "Organisé";
-        $passionne['name'] = "Passionné";
-        $fiable['name'] = "Fiable";
-        $patient['name'] = "Patient";
-        $reflechi['name'] = "Réfléchi";
-        $responsable['name'] = "Responsable";
-        $sociable['name'] = "Sociable";
-        $optimiste['name'] = "Optimiste";
+        // Parcours des compétences pour récupérer les valeurs du formulaire
+        foreach ($skills as $index => $skill) {
+            $value = isset($_POST[$skill]) ? $_POST[$skill] : "off";
+            $name = $nameSkills[$index];
+            $userSkills[$skill] = ['value' => $value, 'name' => $name];
+        }
 
-        $userSkills = [
-            'autonome' => $autonome,
-            'analyse' => $analyse,
-            'ecoute' => $ecoute,
-            'organise' => $organise,
-            'passionne' => $passionne,
-            'fiable' => $fiable,
-            'patient' => $patient,
-            'reflechi' => $reflechi,
-            'responsable' => $responsable,
-            'sociable' => $sociable,
-            'optimiste' => $optimiste,
-        ];  
-
-        // Préparation des données à stocker
+        // Création de la nouvelle référence
         $newReference = [
             'lastname' => $refLastname,
             'firstname' => $refFirstname,
@@ -77,48 +52,49 @@
             'verif' => '0',
         ];
 
+        // Génération du hash pour la référence
         $newRefHash = substr(hash('sha256', json_encode($newReference)), 0, 12);
+        $userJsonFile = str_replace("@", "_", $email) . '.json';
+        $userJsonPath = 'data/' . $userJsonFile;
 
-        // Remplacement du caractère @ dans l'adresse e-mail par un tiret bas (_)
-        $userJsonFile = str_replace("@", "_", $email) . '.json'; // Nom du fichier JSON pour l'utilisateur
-        $userJsonPath = 'data/' . $userJsonFile; // Chemin d'accès au fichier JSON pour l'utilisateur
-
-        // Ajouter les nouvelles données à la suite des données existantes
+        // Ajout de la nouvelle référence aux données de l'utilisateur
         $userData['references'][$newRefHash] = $newReference;
 
-        // Lien de validation
+        // Enregistrement des données de l'utilisateur mises à jour dans le fichier JSON
+        file_put_contents($userJsonPath, json_encode($userData));
+
+        // Construction de l'URL de la page de consultation de la référence
         $consultPageURL = 'http';
         if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') {
             $consultPageURL .= 's';
         }
         $consultPageURL .= '://' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']) . '/valid_ref.php?hash=' . password_hash($newRefHash, PASSWORD_DEFAULT);
-    
 
-        // Réécrire le fichier avec les données mises à jour
-        file_put_contents($userJsonPath, json_encode($userData));
-
+        // Envoi de l'email de validation à l'adresse du référent
         $receiver = $refEmail;
-        $subject = "Demande de référence de ". $userData['firstname'] . " " . $userData['lastname'];
+        $subject = "Demande de référence de " . $userData['firstname'] . " " . $userData['lastname'];
         $body = "Cher " . $newReference["firstname"] . ",\n\n";
         $body .= "Le jeune " . $userData['firstname'] . " " . $userData['lastname'] . " a utilisé notre site et vous a désigné comme référent. ";
         $body .= "Pour valider sa référence, il vous suffit de cliquer sur le lien suivant ou de saisir le code de validation :\n\n";
         $body .= "Lien de validation : " . $consultPageURL . "\n";
         $body .= "Code de validation : " . $newRefHash . "\n\n";
         $body .= "Cordialement,\nL'équipe Jeunes 64";
-        $sender = "From:melvinhqb@gmail.com";
-        
-        if(mail($receiver, $subject, $body, $sender)){
+        $sender = "From: melvinhqb@gmail.com";
+
+        // Envoi de l'email
+        if (mail($receiver, $subject, $body, $sender)) {
             echo "Email sent successfully to $receiver";
-        }else{
+        } else {
             echo "Sorry, failed while sending mail!";
         }
 
-        // Redirection vers une autre page (par exemple, le tableau de bord) après l'enregistrement des données
+        // Redirection vers la page des références
         header("Location: references.php");
         exit();
     }
-
 ?>
+
+
 
 <!DOCTYPE html>
 <html>

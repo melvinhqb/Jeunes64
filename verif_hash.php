@@ -1,6 +1,7 @@
 <?php
     session_start();
 
+    // Vérifie si une session avec l'email est déjà active
     if (isset($_SESSION['email'])) {
         $message = '<a href="logout.php" class="link" id="logout-btn"><i class="fa-solid fa-right-from-bracket"></i> Se déconnecter</a>';
     } else {
@@ -20,18 +21,20 @@
         $err_msg = "Ce code n'est pas valide";
 
         foreach ($users as $email => $path) {
-
+            // Chargement des données de l'utilisateur à partir du fichier JSON
             $userData = json_decode(file_get_contents($users[$email]), true);
         
-            if (isset($userData['references'])) { // Vérification de la clé "references"
+            if (isset($userData['references'])) {
                 foreach ($userData['references'] as $stockedHash => $reference) {
                     if ($stockedHash == $hash) {
-                        if ($userData['references'][$hash]['verif'] == 1) {
+                        if ($reference['verif'] == 1) {
                             $err_msg = "Ce code n'est plus valide";
-                        }
-                        else {
-                            //echo password_hash($hash, PASSWORD_DEFAULT);
-                            header("Location: valid_ref.php?hash=" . password_hash($hash, PASSWORD_DEFAULT));
+                        } else {
+                            // Génération du hash sécurisé pour le code
+                            $hashedCode = password_hash($hash, PASSWORD_DEFAULT);
+                            // Redirection vers la page de validation avec le hash sécurisé en paramètre
+                            header("Location: valid_ref.php?hash=" . $hashedCode);
+                            exit;
                         }
                     }
                 }
@@ -39,7 +42,6 @@
         }
         
     }
-
 ?>
 
 <!DOCTYPE html>

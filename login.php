@@ -1,37 +1,44 @@
 <?php
-session_start();
+    session_start();
 
-if (isset($_SESSION['email'])) {
-    header("Location: profil.php");
-    exit();
-}
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $file = 'users.json';
-    if (!file_exists($file)) {
-        $message = "L'email ou le mot de passe est incorrect.";
-    } else {
-        $data = file_get_contents($file);
-        $users = json_decode($data, true);
-        $email = $_POST['email'];
-        $password = $_POST['password'];
-        
-        if (array_key_exists($email, $users)) {
-            $userData = json_decode(file_get_contents($users[$email]), true);
-            $passwordHash = $userData['password'];
-            if (password_verify($password, $passwordHash)) {
-                $_SESSION['email'] = $email;
-                header("Location: profil.php");
-            } else {
-                $message = "L'email ou le mot de passe est incorrect.";
-            }
-        } else {
-            $message = "L'email ou le mot de passe est incorrect.";
-        }
+    if (isset($_SESSION['email'])) {
+        // Rediriger vers la page de profil si l'utilisateur est déjà connecté
+        header("Location: profil.php");
+        exit();
     }
 
-}
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $file = 'users.json';
+        if (!file_exists($file)) {
+            // Le fichier des utilisateurs n'existe pas, afficher un message d'erreur
+            $error_msg = "L'email ou le mot de passe est incorrect.";
+        } else {
+            $data = file_get_contents($file);
+            $users = json_decode($data, true);
+            $email = $_POST['email'];
+            $password = $_POST['password'];
+            
+            if (array_key_exists($email, $users)) {
+                // L'email existe dans la liste des utilisateurs
+                $userData = json_decode(file_get_contents($users[$email]), true);
+                $passwordHash = $userData['password'];
+                
+                if (password_verify($password, $passwordHash)) {
+                    // Le mot de passe est correct, connecter l'utilisateur
+                    $_SESSION['email'] = $email;
+                    header("Location: profil.php");
+                } else {
+                    // Le mot de passe est incorrect, afficher un message d'erreur
+                    $error_msg = "L'email ou le mot de passe est incorrect.";
+                }
+            } else {
+                // L'email n'existe pas dans la liste des utilisateurs, afficher un message d'erreur
+                $error_msg = "L'email ou le mot de passe est incorrect.";
+            }
+        }
+    }
 ?>
+
 
 
 <!DOCTYPE html>
@@ -70,7 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <section class="form login young">
         <div class="small-container">
             <h1 class="main-title">Se connecter</h1>
-            <?php if (isset($message)) { echo "<p class='text'>$message</p>"; } ?>
+            <?php if (isset($error_msg)) { echo "<p class='text'>$error_msg</p>"; } ?>
             <form id="login-form" action="login.php" method="post">
                     <div class="input-group">
                         <label for="login-email">Email</label>

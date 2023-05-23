@@ -1,11 +1,14 @@
 <?php
-session_start();
+    session_start();
 
-if (isset($_SESSION['email'])) {
-    $message = '<a href="logout.php" class="link" id="logout-btn"><i class="fa-solid fa-right-from-bracket"></i> Se déconnecter</a>';
-} else {
-    $message = '<a href="login.php" class="link" id="login-btn">Se connecter</a><a href="register.php" class="link" id="register-btn">S\'inscrire</a>';
-}
+    // Vérifie si une session avec l'email est déjà active
+    if (isset($_SESSION['email'])) {
+        // Si une session est active, affiche le lien de déconnexion
+        $message = '<a href="logout.php" class="link" id="logout-btn"><i class="fa-solid fa-right-from-bracket"></i> Se déconnecter</a>';
+    } else {
+        // Si aucune session n'est active, affiche les liens de connexion et d'inscription
+        $message = '<a href="login.php" class="link" id="login-btn">Se connecter</a><a href="register.php" class="link" id="register-btn">S\'inscrire</a>';
+    }
 ?>
 
 <!DOCTYPE html>

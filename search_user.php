@@ -1,6 +1,7 @@
 <?php
     session_start();
 
+    // Vérifie si une session avec l'email est déjà active
     if (isset($_SESSION['email'])) {
         $message = '<a href="logout.php" class="link" id="logout-btn"><i class="fa-solid fa-right-from-bracket"></i> Se déconnecter</a>';
     } else {
@@ -20,13 +21,13 @@
         $err_msg = "Cet utilisateur n'existe pas.";
 
         foreach ($users as $email => $path) {
-
+            // Parcours tous les utilisateurs pour vérifier si l'email correspond
             if ($email == $user_email) {
                 header("Location: consult.php?email=". $email);
+                exit; // Redirige vers la page consult.php avec l'email en paramètre
             }
         }
     }
-
 ?>
 
 <!DOCTYPE html>
