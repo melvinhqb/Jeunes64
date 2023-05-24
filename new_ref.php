@@ -13,85 +13,112 @@
     $data = file_get_contents($file);
     $users = json_decode($data, true);
 
+    $message = "";
+
     // Obtenir les données de l'utilisateur à partir du fichier JSON
     $userData = json_decode(file_get_contents($users[$email]), true);
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        // Récupération des données du formulaire
-        $refLastname = $_POST['referent-lastname'];
-        $refFirstname = $_POST['referent-firstname'];
-        $refBirth = $_POST['referent-birth'];
-        $refEmail = $_POST['referent-email'];
-        $refTel = $_POST['referent-tel'];
-        $commitmentType = $_POST['commitment-type'];
-        $description = $_POST['description'];
-        $period = $_POST['period'];
+        // Définir le nombre maximum de cases cochées permises
+        $maxChecked = 4;
 
-        // Définition des compétences et de leurs noms
-        $skills = ['autonome', 'analyse', 'ecoute', 'organise', 'passionne', 'fiable', 'patient', 'reflechi', 'responsable', 'sociable', 'optimiste'];
-        $nameSkills = ['Autonome', 'Capable d\'analyse et de synthèse', 'À l\'écoute', 'Organisé', 'Passionné', 'Fiable', 'Patient', 'Réfléchi', 'Responsable', 'Sociable', 'Optimiste'];
-
-        // Parcours des compétences pour récupérer les valeurs du formulaire
-        foreach ($skills as $index => $skill) {
-            $value = isset($_POST[$skill]) ? $_POST[$skill] : "off";
-            $name = $nameSkills[$index];
-            $userSkills[$skill] = ['value' => $value, 'name' => $name];
+        // Vérifier le nombre de cases cochées
+        $checkedCount = 0;
+        $savoirsEtre = array("autonome", "analyse", "ecoute", "organise", "passionne", "fiable", "patient", "reflechi", "responsable", "sociable", "optimiste");
+        foreach ($savoirsEtre as $savoir) {
+            if (isset($_POST[$savoir]) && $_POST[$savoir] == "on") {
+                $checkedCount++;
+            }
         }
 
-        // Création de la nouvelle référence
-        $newReference = [
-            'lastname' => $refLastname,
-            'firstname' => $refFirstname,
-            'birth' => $refBirth,
-            'email' => $refEmail,
-            'tel' => $refTel,
-            'commitment-type' => $commitmentType,
-            'description' => $description,
-            'period' => $period,
-            'skills' => $userSkills,
-            'verif' => '0',
-        ];
-
-        // Génération du hash pour la référence
-        $newRefHash = substr(hash('sha256', json_encode($newReference)), 0, 12);
-        $userJsonFile = str_replace("@", "_", $email) . '.json';
-        $userJsonPath = 'data/' . $userJsonFile;
-
-        // Ajout de la nouvelle référence aux données de l'utilisateur
-        $userData['references'][$newRefHash] = $newReference;
-
-        // Enregistrement des données de l'utilisateur mises à jour dans le fichier JSON
-        file_put_contents($userJsonPath, json_encode($userData));
-
-        // Construction de l'URL de la page de consultation de la référence
-        $consultPageURL = 'http';
-        if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') {
-            $consultPageURL .= 's';
-        }
-        $consultPageURL .= '://' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']) . '/valid_ref.php?hash=' . password_hash($newRefHash, PASSWORD_DEFAULT);
-
-        // Envoi de l'email de validation à l'adresse du référent
-        $receiver = $refEmail;
-        $subject = "Demande de référence de " . $userData['firstname'] . " " . $userData['lastname'];
-        $body = "Cher " . $newReference["firstname"] . ",\n\n";
-        $body .= "Le jeune " . $userData['firstname'] . " " . $userData['lastname'] . " a utilisé notre site et vous a désigné comme référent. ";
-        $body .= "Pour valider sa référence, il vous suffit de cliquer sur le lien suivant ou de saisir le code de validation :\n\n";
-        $body .= "Lien de validation : " . $consultPageURL . "\n";
-        $body .= "Code de validation : " . $newRefHash . "\n\n";
-        $body .= "Cordialement,\nL'équipe Jeunes 64";
-        $sender = "From: melvinhqb@gmail.com";
-
-        // Envoi de l'email
-        if (mail($receiver, $subject, $body, $sender)) {
-            echo "Email sent successfully to $receiver";
+        // Vérifier si le nombre de cases cochées dépasse la limite
+        if ($checkedCount > $maxChecked) {
+            $message = "Vous ne pouvez sélectionner que 4 options au maximum.";
         } else {
-            echo "Sorry, failed while sending mail!";
-        }
 
-        // Redirection vers la page des références
-        header("Location: references.php");
-        exit();
+            // Le nombre de cases cochées est valide, continuer le traitement du formulaire...
+
+            // Récupérer les autres valeurs du formulaire
+            $referentLastname = $_POST["referent-lastname"];
+            $referentFirstname = $_POST["referent-firstname"];
+
+            // Récupération des données du formulaire
+            $refLastname = $_POST['referent-lastname'];
+            $refFirstname = $_POST['referent-firstname'];
+            $refBirth = $_POST['referent-birth'];
+            $refEmail = $_POST['referent-email'];
+            $refTel = $_POST['referent-tel'];
+            $commitmentType = $_POST['commitment-type'];
+            $description = $_POST['description'];
+            $period = $_POST['period'];
+
+            // Définition des compétences et de leurs noms
+            $skills = ['autonome', 'analyse', 'ecoute', 'organise', 'passionne', 'fiable', 'patient', 'reflechi', 'responsable', 'sociable', 'optimiste'];
+            $nameSkills = ['Autonome', 'Capable d\'analyse et de synthèse', 'À l\'écoute', 'Organisé', 'Passionné', 'Fiable', 'Patient', 'Réfléchi', 'Responsable', 'Sociable', 'Optimiste'];
+
+            // Parcours des compétences pour récupérer les valeurs du formulaire
+            foreach ($skills as $index => $skill) {
+                $value = isset($_POST[$skill]) ? $_POST[$skill] : "off";
+                $name = $nameSkills[$index];
+                $userSkills[$skill] = ['value' => $value, 'name' => $name];
+            }
+
+            // Création de la nouvelle référence
+            $newReference = [
+                'lastname' => $refLastname,
+                'firstname' => $refFirstname,
+                'birth' => $refBirth,
+                'email' => $refEmail,
+                'tel' => $refTel,
+                'commitment-type' => $commitmentType,
+                'description' => $description,
+                'period' => $period,
+                'skills' => $userSkills,
+                'verif' => '0',
+            ];
+
+            // Génération du hash pour la référence
+            $newRefHash = substr(hash('sha256', json_encode($newReference)), 0, 12);
+            $userJsonFile = str_replace("@", "_", $email) . '.json';
+            $userJsonPath = 'data/' . $userJsonFile;
+
+            // Ajout de la nouvelle référence aux données de l'utilisateur
+            $userData['references'][$newRefHash] = $newReference;
+
+            // Enregistrement des données de l'utilisateur mises à jour dans le fichier JSON
+            file_put_contents($userJsonPath, json_encode($userData));
+
+            // Construction de l'URL de la page de consultation de la référence
+            $consultPageURL = 'http';
+            if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') {
+                $consultPageURL .= 's';
+            }
+            $consultPageURL .= '://' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']) . '/valid_ref.php?hash=' . password_hash($newRefHash, PASSWORD_DEFAULT);
+
+            // Envoi de l'email de validation à l'adresse du référent
+            $receiver = $refEmail;
+            $subject = "Demande de référence de " . $userData['firstname'] . " " . $userData['lastname'];
+            $body = "Cher " . $newReference["firstname"] . ",\n\n";
+            $body .= "Le jeune " . $userData['firstname'] . " " . $userData['lastname'] . " a utilisé notre site et vous a désigné comme référent. ";
+            $body .= "Pour valider sa référence, il vous suffit de cliquer sur le lien suivant ou de saisir le code de validation :\n\n";
+            $body .= "Lien de validation : " . $consultPageURL . "\n";
+            $body .= "Code de validation : " . $newRefHash . "\n\n";
+            $body .= "Cordialement,\nL'équipe Jeunes 64";
+            $sender = "From: melvinhqb@gmail.com";
+
+            // Envoi de l'email
+            if (mail($receiver, $subject, $body, $sender)) {
+                echo "Email sent successfully to $receiver";
+            } else {
+                echo "Sorry, failed while sending mail!";
+            }
+
+            // Redirection vers la page des références
+            header("Location: references.php");
+            exit();
+        }
     }
+
 ?>
 
 
@@ -145,40 +172,41 @@
         <div class="small-container">
             <h1 class="main-title">Nouvelle demande de référence</h1>
             <h3 class="h3-description">Décrivez votre expérience et mettez en avant ce que vous en avez retiré.</h3>
+            <p class="text"><?php echo $message;?></p>
             <form action="new_ref.php" method="post">
                 <h2 class="subtitle">Coordonnées du référent</h2>
                 <div class="input-group">
                     <label for="referent-lastname">Nom</label>
-                    <input type="text" id="referent-lastname" name="referent-lastname" required>
+                    <input type="text" id="referent-lastname" name="referent-lastname" required value="<?php echo isset($_POST['referent-lastname']) ? $_POST['referent-lastname'] : ''; ?>">
                 </div>
                 <div class="input-group">
                     <label for="referent-firstname">Prénom</label>
-                    <input type="text" id="referent-firstname" name="referent-firstname" required>
+                    <input type="text" id="referent-firstname" name="referent-firstname" required value="<?php echo isset($_POST['referent-firstname']) ? $_POST['referent-firstname'] : ''; ?>">
                 </div>
                 <div class="input-group">
                     <label for="referent-birth">Date de naissance</label>
-                    <input type="date" id="referent-birth" name="referent-birth" required>
+                    <input type="date" id="referent-birth" name="referent-birth" required value="<?php echo isset($_POST['referent-birth']) ? $_POST['referent-birth'] : ''; ?>">
                 </div>
                 <div class="input-group">
                     <label for="referent-email">Email</label>
-                    <input type="email" id="referent-email" name="referent-email" required>
+                    <input type="email" id="referent-email" name="referent-email" required value="<?php echo isset($_POST['referent-email']) ? $_POST['referent-email'] : ''; ?>">
                 </div>
                 <div class="input-group">
                     <label for="referent-email">Téléphone</label>
-                    <input type="tel" id="referent-tel" name="referent-tel" pattern="0[1-9](\d{2}){4}" required>
+                    <input type="tel" id="referent-tel" name="referent-tel" pattern="0[1-9](\d{2}){4}" required value="<?php echo isset($_POST['referent-tel']) ? $_POST['referent-tel'] : ''; ?>">
                 </div>
                 <h2 class="subtitle">Mon engagement</h2>
                 <div class="input-group">
                     <label for="commitment-type">Milieu de l'engagement</label>
-                    <input type="text" id="commitment-type" name="commitment-type" required>
+                    <input type="text" id="commitment-type" name="commitment-type" required value="<?php echo isset($_POST['commitment-type']) ? $_POST['commitment-type'] : ''; ?>">
                 </div>
                 <div class="input-group">
                     <label for="period">Durée (en mois)</label>
-                    <input type="number" id="period" name="period" min=1 required>
+                    <input type="number" id="period" name="period" min=1 required value="<?php echo isset($_POST['period']) ? $_POST['period'] : ''; ?>">
                 </div>
                 <div class="input-group">
                     <label for="description">Description</label>
-                    <textarea name="description" id="description" rows="10" require></textarea>
+                    <textarea name="description" id="description" rows="10" require><?php echo isset($_POST['description']) ? $_POST['description'] : ''; ?></textarea>
                 </div>
                 <h2 class="subtitle">Mes savoirs être</h2>
                 <div class="checkbox-list">
@@ -234,6 +262,7 @@
         </div>
 	</section>
 </body>
+
 <script>
     // Sélectionner toutes les cases à cocher
     const checkboxes = document.querySelectorAll('.checkbox-group input[type="checkbox"]');
@@ -243,7 +272,7 @@
         checkbox.addEventListener('change', () => {
             if (checkbox.checked) {
                 checkedCount++;
-                if (checkedCount > 4) {
+                if (checkedCount > 6) {
                     checkbox.checked = false; // Désélectionner la case cochée supplémentaire
                     checkedCount--; // Décrémenter le compteur
                 }

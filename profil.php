@@ -13,6 +13,8 @@
     $data = file_get_contents($file);
     $users = json_decode($data, true);
 
+    $send_msg = "";
+
     // Obtenir les données de l'utilisateur à partir du fichier JSON
     $userData = json_decode(file_get_contents($users[$email]), true);
 
@@ -22,6 +24,24 @@
         $consultPageURL .= 's';
     }
     $consultPageURL .= '://' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']) . '/consult.php?email=' . $email;
+
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        // Récupère l'email du consultant
+        $consultEmail = $_POST["consult-email"];
+
+        // Envoi de l'email de validation à l'adresse du référent
+        $receiver = $consultEmail;
+        $subject = "Consultez le profil de " . $userData['firstname'] . " " . $userData['lastname'];
+        $body = $consultPageURL;
+        $sender = "From: site.jeunes64@gmail.com";
+
+        // Envoi de l'email
+        if (mail($receiver, $subject, $body, $sender)) {
+            $send_msg = "<p class='text green'>Votre lien a été envoyé à $receiver</p>";
+        } else {
+            $send_msg = "<p class='text red'>Désolé, l'email n'a pas pu être envoyé</p>";
+        }
+    }
 ?>
 
 
@@ -89,7 +109,14 @@
                 <input type="text" id="text-link" class="text-link" value="<?php echo $consultPageURL; ?>" readonly>
                 <button class="copy-button" id="copy-button">Copier</button>
             </div>
-
+            <h2 class="subtitle">Envoyer le lien à un consultant</h2>
+            <form action="profil.php" method="post">
+                <?php echo $send_msg;?>
+                <div class="copy-link-bar">
+                    <input type="email" id="text-link" name="consult-email" class="text-link" require>
+                    <button type="submit" class="copy-button">Envoyer</button>
+                </div>
+            </form>
         </div>
     </section>
     <script>
