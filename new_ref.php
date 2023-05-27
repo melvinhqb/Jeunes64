@@ -104,7 +104,7 @@
             $body .= "Lien de validation : " . $consultPageURL . "\n";
             $body .= "Code de validation : " . $newRefHash . "\n\n";
             $body .= "Cordialement,\nL'équipe Jeunes 64";
-            $sender = "From: melvinhqb@gmail.com";
+            $sender = "From: Jeunes 6.4";
 
             // Envoi de l'email
             if (mail($receiver, $subject, $body, $sender)) {
@@ -272,7 +272,7 @@
         checkbox.addEventListener('change', () => {
             if (checkbox.checked) {
                 checkedCount++;
-                if (checkedCount > 6) {
+                if (checkedCount > 4) {
                     checkbox.checked = false; // Désélectionner la case cochée supplémentaire
                     checkedCount--; // Décrémenter le compteur
                 }

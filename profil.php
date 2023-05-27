@@ -33,7 +33,7 @@
         $receiver = $consultEmail;
         $subject = "Consultez le profil de " . $userData['firstname'] . " " . $userData['lastname'];
         $body = $consultPageURL;
-        $sender = "From: site.jeunes64@gmail.com";
+        $sender = "From: Jeunes 6.4";
 
         // Envoi de l'email
         if (mail($receiver, $subject, $body, $sender)) {

@@ -92,7 +92,7 @@
                 $body = "Cher " . $reference["firstname"] . ",\n\n";
                 $body .= "Vous venez de valider la demande de référence de " . $userData['firstname'] . " " . $userData['lastname'] . ", et nous vous remercions.\n\n";
                 $body .= "Cordialement,\nL'équipe Jeunes 64";
-                $sender = "From: melvinhqb@gmail.com";
+                $sender = "From: Jeunes 6.4";
 
                 mail($receiver, $subject, $body, $sender);
                 break;
