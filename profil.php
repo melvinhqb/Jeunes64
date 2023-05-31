@@ -15,6 +15,16 @@
 
     $send_msg = "";
 
+    if (isset($_SESSION['changes_confirmed'])) {
+        $confirmation_message = "<div class='alert alert-success alert-white rounded'>
+                                    <div class='icon'><i class='fa fa-check'></i></div>
+                                    <strong>Confirmation</strong> Les changements ont été effectués avec succès !
+                                </div>";
+        unset($_SESSION['changes_confirmed']);
+    } else {
+        $confirmation_message = "";
+    }
+
     // Obtenir les données de l'utilisateur à partir du fichier JSON
     $userData = json_decode(file_get_contents($users[$email]), true);
 
@@ -37,9 +47,15 @@
 
         // Envoi de l'email
         if (mail($receiver, $subject, $body, $sender)) {
-            $send_msg = "<p class='text green'>Votre lien a été envoyé à $receiver</p>";
+            $send_msg = "<div class='alert alert-success alert-white rounded'>
+                            <div class='icon'><i class='fa fa-check'></i></div>
+                            <strong>Confirmation</strong> Votre lien a été envoyé à $receiver
+                        </div>";
         } else {
-            $send_msg = "<p class='text red'>Désolé, l'email n'a pas pu être envoyé</p>";
+            $send_msg = "<div class='alert alert-danger alert-white rounded'>
+                            <div class='icon'><i class='fa fa-check'></i></div>
+                            <strong>Erreur</strong> L'email n'a pas pu être envoyé à $receiver
+                        </div>";
         }
     }
 ?>
@@ -84,6 +100,9 @@
         </div>
     </header>
     <section class="young">
+        <div class="background-img">
+            <img src="assets/bg-jeunes.png" alt="">
+        </div>
         <div class="subnav">
             <div class="medium-container">
                 <ul class="subnav-list">
@@ -99,6 +118,7 @@
                 <h2 class="subtitle">Mes informations personnelles</h2>
                 <p class="text"><a href="edit_profil.php" class="link-btn"><i class="fa-solid fa-pen-to-square"></i> Modifier profil</a></p>
             </div>
+            <?php echo $confirmation_message;?></p>
             <div class="ref-info">
                 <p><i class="fa-solid fa-cake-candles color-icn"></i> <?php echo date("d M Y", strtotime($userData['birth'])); ?></p>
                 <p><i class="fa-solid fa-at color-icn"></i> <?php echo $userData['email']; ?></p>

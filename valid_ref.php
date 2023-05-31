@@ -58,6 +58,9 @@
         </div>
     </header>
         <section class="referent">
+        <div class="background-img">
+            <img src="assets/bg-referents.png" alt="">
+        </div>
         <div class="small-container">
             <form action="thank.php" method="post">
                 <?php

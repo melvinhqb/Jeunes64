@@ -78,6 +78,9 @@
         </div>
     </header>
     <section class="consultant">
+        <div class="background-img">
+            <img src="assets/bg-consultants.png" alt="">
+        </div>
     <div class="medium-container">
         <h1 class="main-title">Profil de <?php echo $userData["firstname"]." ".$userData["lastname"];?></h1>
         <h2 class="subtitle">Informations personnelles</h2>
@@ -104,7 +107,10 @@
                 // Afficher un message si aucune référence validée n'est disponible
                 if ($count == 0) {
                     ?>
-                    <p class='text'>Pas de références validées</p>
+                        <div class='alert alert-info alert-white rounded'>
+                            <div class='icon'><i class='fa fa-info-circle'></i></div>
+                            Pas de références validées
+                        </div>
                     <?php
                 }
 
@@ -184,7 +190,10 @@
                 }
             } else {
                 ?>
-                <p class='text'>Pas de références validées</p>
+                    <div class='alert alert-info alert-white rounded'>
+                            <div class='icon'><i class='fa fa-info-circle'></i></div>
+                            Pas de références validées
+                    </div>
                 <?php
             }
         ?>

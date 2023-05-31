@@ -29,7 +29,16 @@
 
         // Vérifie si le nouveau mail n'est pas déjà associé à un compte
         if (($email != $email_session) && (array_key_exists($email, $users))) {
-            $message = "Cet e-mail est déjà associé à un compte.";
+            $message = "<div class='alert alert-warning alert-white rounded'>
+                            <div class='icon'><i class='fa fa-warning'></i></div>
+                            <strong>Attention !</strong> Cet e-mail est déjà associé à un compte.
+                        </div>";
+
+        } else if ((empty($current_password) && !empty($new_password)) || (!empty($current_password) && empty($new_password))) {
+            $message = "<div class='alert alert-warning alert-white rounded'>
+                            <div class='icon'><i class='fa fa-warning'></i></div>
+                            <strong>Attention !</strong> Le changement de mot de passe requiert le mot de passe actuel ainsi que le nouveau.
+                        </div>";
 
         } else if (!empty($current_password) && !empty($new_password)) {
             // Vérification du mot de passe actuel
@@ -66,12 +75,20 @@
 
                     file_put_contents('users.json', json_encode($users));
 
+                    $_SESSION['changes_confirmed'] = true;
+
                     header("Location: profil.php");
                 } else {
-                    $message = "Le mot de passe actuel est incorrect.";
+                    $message = "<div class='alert alert-warning alert-white rounded'>
+                                    <div class='icon'><i class='fa fa-warning'></i></div>
+                                    <strong>Attention !</strong> Le mot de passe actuel est incorrect.
+                                </div>";
                 }
             } else {
-                $message = "Le nouveau mot de passe doit être différent de l'ancien.";
+                $message = "<div class='alert alert-warning alert-white rounded'>
+                                <div class='icon'><i class='fa fa-warning'></i></div>
+                                <strong>Attention !</strong> Le nouveau mot de passe doit être différent de l'ancien.
+                            </div>";
             }
         } else {          
             $userJsonFile = str_replace("@", "_", $email) . '.json'; // Nom du fichier JSON pour l'utilisateur
@@ -104,13 +121,13 @@
             // Écrire le JSON dans le fichier
             file_put_contents('users.json', json_encode($users));
 
+            $_SESSION['changes_confirmed'] = true;
+
             header("Location: profil.php");
         }
     }
 ?>
 
-<!DOCTYPE html>
-<html>
 <!DOCTYPE html>
 <html lang="fr">
     <head>
@@ -148,6 +165,9 @@
             </div>
         </header>
         <section class="young">
+            <div class="background-img">
+                <img src="assets/bg-jeunes.png" alt="">
+            </div>
             <div class="subnav">
                 <div class="medium-container">
                     <ul class="subnav-list">
@@ -192,7 +212,7 @@
                         <input type="password", name="new-password">
                     </div>
                     <div class="center">
-                            <button type="submit" class="btn">Mettre à jour</button>
+                        <button type="submit" class="btn">Mettre à jour</button>
                     </div>
                 </form>
             </div>

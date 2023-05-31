@@ -77,6 +77,9 @@
 	</header>
 
 	<section class="young">
+		<div class="background-img">
+            <img src="assets/bg-jeunes.png" alt="">
+        </div>
 		<div class="subnav">
 			<div class="medium-container">
 				<ul class="subnav-list">
@@ -93,172 +96,184 @@
 			</div>
 
 			<?php
-			echo "<h2 class='subtitle'>Demandes en attente</h2>";
-			if (isset($userData['references']) && !empty($userData['references'])) {
-				$references = array_reverse($userData['references']);
+				echo "<h2 class='subtitle'>Demandes en attente</h2>";
+				if (isset($userData['references']) && !empty($userData['references'])) {
+					$references = array_reverse($userData['references']);
 
-				$count = 0;
-				foreach ($references as $ref) {
-					if ($ref['verif'] == 0) {
-						$count = 1;
-						break;
+					$count = 0;
+					foreach ($references as $ref) {
+						if ($ref['verif'] == 0) {
+							$count = 1;
+							break;
+						}
 					}
-				}
 
-				if ($count == 0) {
-					echo "<p class='text'>Pas de références en attente</p>";
-				}
+					if ($count == 0) {
+						echo "<div class='alert alert-info alert-white rounded'>
+								<div class='icon'><i class='fa fa-info-circle'></i></div>
+								Pas de références en attente
+							</div>";
+					}
 
-				foreach ($references as $key => $reference) {
-					// Récupérer la valeur de 'verif'
-					$verif = $reference['verif'];
-					$refBirth = $reference['birth'];
-					$refBirth_formattee = date("d M Y", strtotime($refBirth));
+					foreach ($references as $key => $reference) {
+						// Récupérer la valeur de 'verif'
+						$verif = $reference['verif'];
+						$refBirth = $reference['birth'];
+						$refBirth_formattee = date("d M Y", strtotime($refBirth));
 
-					if ($verif == 0) {
-						?>
-						<div class="box orange">
-							<div class="reference-status">
-								<div class="reference-header">
-									<h3>Demande de référence à <?php echo $reference['firstname'] . ' ' . $reference['lastname']; ?></h3>
-									<div class="reference-info">
-										<p class="legend">Milieu de l'engagement : <?php echo $reference['commitment-type']; ?></p>
-										<p class="legend">Durée : <?php echo $reference["period"]; ?> mois</p>
+						if ($verif == 0) {
+							?>
+							<div class="box orange">
+								<div class="reference-status">
+									<div class="reference-header">
+										<h3>Demande de référence à <?php echo $reference['firstname'] . ' ' . $reference['lastname']; ?></h3>
+										<div class="reference-info">
+											<p class="legend">Milieu de l'engagement : <?php echo $reference['commitment-type']; ?></p>
+											<p class="legend">Durée : <?php echo $reference["period"]; ?> mois</p>
+										</div>
+									</div>
+									<span><i class="fa-solid fa-clock color-icn orange"></i></span>
+								</div>
+								<div class="two-columns">
+									<div class="young-col column">
+										<p><?php echo $reference["description"]; ?></p>
+									</div>
+									<div class="column referent">
+										<h4>Informations référent</h4>
+										<div class="ref-info">
+											<span><i class="fa-solid fa-cake-candles color-icn"></i> <?php echo $refBirth_formattee; ?></span>
+											<span><i class="fa-solid fa-at color-icn"></i> <?php echo $reference["email"]; ?></span>
+											<span><i class="fa-solid fa-phone color-icn"></i> <?php echo $reference["tel"]; ?></span>
+										</div>
 									</div>
 								</div>
-								<span><i class="fa-solid fa-clock color-icn orange"></i></span>
-							</div>
-							<div class="two-columns">
-								<div class="young-col column">
-									<p><?php echo $reference["description"]; ?></p>
-								</div>
-								<div class="column referent">
-									<h4>Informations référent</h4>
-									<div class="ref-info">
-										<span><i class="fa-solid fa-cake-candles color-icn"></i> <?php echo $refBirth_formattee; ?></span>
-										<span><i class="fa-solid fa-at color-icn"></i> <?php echo $reference["email"]; ?></span>
-										<span><i class="fa-solid fa-phone color-icn"></i> <?php echo $reference["tel"]; ?></span>
-									</div>
-								</div>
-							</div>
-							<div class="two-columns">
-								<div class="column">
-									<h4>Je suis...</h4>
-									<div class="inline-skills">
-										<?php
-										foreach ($reference['skills'] as $skill) {
-											if ($skill["value"] == "on") {
-												echo '<div class="pill"><span>' . $skill["name"] . '</span></div>';
+								<div class="two-columns">
+									<div class="column">
+										<h4>Je suis...</h4>
+										<div class="inline-skills">
+											<?php
+											foreach ($reference['skills'] as $skill) {
+												if ($skill["value"] == "on") {
+													echo '<div class="pill"><span>' . $skill["name"] . '</span></div>';
+												}
 											}
-										}
-										?>
+											?>
+										</div>
+									</div>
+									<div class="column referent">
 									</div>
 								</div>
-								<div class="column referent">
+								<div class="del-btn">
+									<p class="legend"><?php echo $key; ?></p>
+									<a href="#" class="delete-link" onclick="confirmDeletion('<?php echo $key; ?>')"><i class="fa-solid fa-trash"></i></a>
 								</div>
 							</div>
-							<div class="del-btn">
-								<p class="legend"><?php echo $key; ?></p>
-								<a href="#" class="delete-link" onclick="confirmDeletion('<?php echo $key; ?>')"><i class="fa-solid fa-trash"></i></a>
-							</div>
-						</div>
-						<?php
+							<?php
+						}
 					}
+				} else {
+					echo "<div class='alert alert-info alert-white rounded'>
+							<div class='icon'><i class='fa fa-info-circle'></i></div>
+							Pas de références en attente
+						</div>";
 				}
-			} else {
-				echo "<p class='text'>Pas de références en attente</p>";
-			}
 
-			echo "<h2 class='subtitle'>Demandes validées</h2>";
-			if (isset($userData['references']) && !empty($userData['references'])) {
-				$references = array_reverse($userData['references']);
+				echo "<h2 class='subtitle'>Demandes validées</h2>";
+				if (isset($userData['references']) && !empty($userData['references'])) {
+					$references = array_reverse($userData['references']);
 
-				$count = 0;
-				foreach ($references as $ref) {
-					if ($ref['verif'] == 1) {
-						$count = 1;
-						break;
+					$count = 0;
+					foreach ($references as $ref) {
+						if ($ref['verif'] == 1) {
+							$count = 1;
+							break;
+						}
 					}
-				}
 
-				if ($count == 0) {
-					echo "<p class='text'>Pas de références validées</p>";
-				}
+					if ($count == 0) {
+						echo "<div class='alert alert-info alert-white rounded'>
+							<div class='icon'><i class='fa fa-info-circle'></i></div>
+							Pas de références validées
+						</div>";
+					}
 
-				foreach ($references as $key => $reference) {
-					// Récupérer la valeur de 'verif'
-					$verif = $reference['verif'];
-					$refBirth = $reference['birth'];
-					$refBirth_formattee = date("d M Y", strtotime($refBirth));
+					foreach ($references as $key => $reference) {
+						// Récupérer la valeur de 'verif'
+						$verif = $reference['verif'];
+						$refBirth = $reference['birth'];
+						$refBirth_formattee = date("d M Y", strtotime($refBirth));
 
-					if ($verif == 1) {
-						?>
-						<div class="box green">
-							<div class="reference-status">
-								<div class="reference-header">
-									<h3>Demande de référence à <?php echo $reference['firstname'] . ' ' . $reference['lastname']; ?></h3>
-									<div class="reference-info">
-										<p class="legend">Engagement : <?php echo $reference['commitment-type']; ?></p>
-										<p class="legend">Durée : <?php echo $reference["period"]; ?> mois</p>
+						if ($verif == 1) {
+							?>
+							<div class="box green">
+								<div class="reference-status">
+									<div class="reference-header">
+										<h3>Demande de référence à <?php echo $reference['firstname'] . ' ' . $reference['lastname']; ?></h3>
+										<div class="reference-info">
+											<p class="legend">Engagement : <?php echo $reference['commitment-type']; ?></p>
+											<p class="legend">Durée : <?php echo $reference["period"]; ?> mois</p>
+										</div>
+									</div>
+									<span><i class="fa-solid fa-circle-check color-icn green"></i></span>
+								</div>
+								<div class="two-columns">
+									<div class="young-col column">
+										<p><?php echo $reference["description"]; ?></p>
+									</div>
+									<div class="column referent">
+										<h4>Informations référent</h4>
+										<div class="ref-info">
+											<span><i class="fa-solid fa-cake-candles color-icn"></i> <?php echo $refBirth_formattee; ?></span>
+											<span><i class="fa-solid fa-at color-icn"></i> <?php echo $reference["email"]; ?></span>
+											<span><i class="fa-solid fa-phone color-icn"></i> <?php echo $reference["tel"]; ?></span>
+										</div>
+										<span></span>
 									</div>
 								</div>
-								<span><i class="fa-solid fa-circle-check color-icn green"></i></span>
-							</div>
-							<div class="two-columns">
-								<div class="young-col column">
-									<p><?php echo $reference["description"]; ?></p>
-								</div>
-								<div class="column referent">
-									<h4>Informations référent</h4>
-									<div class="ref-info">
-										<span><i class="fa-solid fa-cake-candles color-icn"></i> <?php echo $refBirth_formattee; ?></span>
-										<span><i class="fa-solid fa-at color-icn"></i> <?php echo $reference["email"]; ?></span>
-										<span><i class="fa-solid fa-phone color-icn"></i> <?php echo $reference["tel"]; ?></span>
-									</div>
-									<span></span>
-								</div>
-							</div>
-							<div class="two-columns">
-								<div class="column">
-									<h4>Je suis...</h4>
-									<div class="inline-skills">
-										<?php
-										foreach ($reference['skills'] as $skill) {
-											if ($skill["value"] == "on") {
-												echo '<div class="pill"><span>' . $skill["name"] . '</span></div>';
+								<div class="two-columns">
+									<div class="column">
+										<h4>Je suis...</h4>
+										<div class="inline-skills">
+											<?php
+											foreach ($reference['skills'] as $skill) {
+												if ($skill["value"] == "on") {
+													echo '<div class="pill"><span>' . $skill["name"] . '</span></div>';
+												}
 											}
-										}
-										?>
+											?>
+										</div>
 									</div>
-								</div>
-								<div class="column referent">
-									<h4>Je confirme qu'il (elle) est...</h4>
-									<div class="inline-skills">
-										<?php
-										foreach ($reference['skills'] as $skill) {
-											if ($skill["refValue"] == "on") {
-												echo '<div class="pill"><span>' . $skill["name"] . '</span></div>';
+									<div class="column referent">
+										<h4>Je confirme qu'il (elle) est...</h4>
+										<div class="inline-skills">
+											<?php
+											foreach ($reference['skills'] as $skill) {
+												if ($skill["refValue"] == "on") {
+													echo '<div class="pill"><span>' . $skill["name"] . '</span></div>';
+												}
 											}
-										}
-										?>
+											?>
+										</div>
 									</div>
 								</div>
+								<div>
+									<h4>Commentaire du référent</h4>
+									<p class="box-text"><?php echo $reference['refComment']; ?></p>
+								</div>
+								<div class="del-btn">
+									<p class="legend"><?php echo $key; ?></p>
+									<a href="#" class="delete-link" onclick="confirmDeletion('<?php echo $key; ?>')"><i class="fa-solid fa-trash"></i></a>
+								</div>
 							</div>
-							<div>
-								<h4>Commentaire du référent</h4>
-								<p class="box-text"><?php echo $reference['refComment']; ?></p>
-							</div>
-							<div class="del-btn">
-								<p class="legend"><?php echo $key; ?></p>
-								<a href="#" class="delete-link" onclick="confirmDeletion('<?php echo $key; ?>')"><i class="fa-solid fa-trash"></i></a>
-							</div>
-						</div>
-						<?php
+							<?php
+						}
 					}
+				} else {
+					echo "<div class='alert alert-info alert-white rounded'>
+							<div class='icon'><i class='fa fa-info-circle'></i></div>
+							Pas de références validées
+						</div>";
 				}
-			} else {
-				echo "<p class='text'>Pas de références validées</p>";
-			}
 			?>
 		</div>
 	</section>
