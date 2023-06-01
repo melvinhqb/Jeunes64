@@ -42,7 +42,10 @@
         // Envoi de l'email de validation à l'adresse du référent
         $receiver = $consultEmail;
         $subject = "Consultez le profil de " . $userData['firstname'] . " " . $userData['lastname'];
-        $body = $consultPageURL;
+        $body = file_get_contents('consult_mail.txt');
+        $body = str_replace('{FIRSTNAME}', $userData['firstname'], $body);
+        $body = str_replace('{LASTNAME}', $userData['lastname'], $body);
+        $body = str_replace('{LINK}', $consultPageURL, $body);
         $sender = "From: Jeunes 6.4";
 
         // Envoi de l'email

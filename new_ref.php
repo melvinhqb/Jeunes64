@@ -98,12 +98,11 @@
             // Envoi de l'email de validation à l'adresse du référent
             $receiver = $refEmail;
             $subject = "Demande de référence de " . $userData['firstname'] . " " . $userData['lastname'];
-            $body = "Cher " . $newReference["firstname"] . ",\n\n";
-            $body .= "Le jeune " . $userData['firstname'] . " " . $userData['lastname'] . " a utilisé notre site et vous a désigné comme référent. ";
-            $body .= "Pour valider sa référence, il vous suffit de cliquer sur le lien suivant ou de saisir le code de validation :\n\n";
-            $body .= "Lien de validation : " . $consultPageURL . "\n";
-            $body .= "Code de validation : " . $newRefHash . "\n\n";
-            $body .= "Cordialement,\nL'équipe Jeunes 64";
+            $body = file_get_contents('ref_mail.txt');
+            $body = str_replace('{FIRSTNAME}', $userData['firstname'], $body);
+            $body = str_replace('{LASTNAME}', $userData['lastname'], $body);
+            $body = str_replace('{LINK}', $consultPageURL, $body);
+            $body = str_replace('{CODE}', $newRefHash, $body);
             $sender = "From: Jeunes 6.4";
 
             // Envoi de l'email

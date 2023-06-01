@@ -1,0 +1,23 @@
+Bonjour,
+
+Le jeune {FIRSTNAME} {LASTNAME} vous invite à consulter son profil.
+
+Le projet Jeunes 6.4 est un dispositif de valorisation de l’engagement des jeunes en
+Pyrénées-Atlantiques soutenu par l’État, le Conseil Général, le Conseil Régional, les CAF
+Béarn-Soule et Pays Basque, la MSA, la CPAM.
+
+Ce projet, adressé aux jeunes entre 16 et 30 ans, vise à valoriser toute expérience comme
+source d’enrichissement qui puisse être reconnue comme l’expression d’un savoir faire ou
+savoir être.
+
+Afin de compléter leur CV, les jeunes peuvent demander des
+références qui confirment leur expérience (clubs de sport, bénévolat, services à domiciles,
+etc.).
+
+Vous êtes donc invité à consulter ses références en tant que potentiel recruteur.
+
+{LINK}
+
+Cordialement,
+
+L'équipe Jeunes 6.4
