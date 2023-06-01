@@ -160,9 +160,6 @@
         </div>
     </header>
 	<section class="young">
-        <div class="background-img">
-            <img src="assets/bg-jeunes.png" alt="">
-        </div>
         <div class="subnav">
             <div class="medium-container">
                 <ul class="subnav-list">

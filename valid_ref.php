@@ -58,9 +58,6 @@
         </div>
     </header>
         <section class="referent">
-        <div class="background-img">
-            <img src="assets/bg-referents.png" alt="">
-        </div>
         <div class="small-container">
             <form action="thank.php" method="post">
                 <?php
@@ -167,5 +164,24 @@
             </form>
         </div>
     </section>
+    <script>
+        // Sélectionner toutes les cases à cocher
+        const checkboxes = document.querySelectorAll('.checkbox-group input[type="checkbox"]');
+        let checkedCount = 0;
+
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', () => {
+                if (checkbox.checked) {
+                    checkedCount++;
+                    if (checkedCount > 4) {
+                        checkbox.checked = false; // Désélectionner la case cochée supplémentaire
+                        checkedCount--; // Décrémenter le compteur
+                    }
+                } else {
+                    checkedCount--;
+                }
+            });
+        });
+    </script>
 </body>
 </html>

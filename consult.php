@@ -78,9 +78,6 @@
         </div>
     </header>
     <section class="consultant">
-        <div class="background-img">
-            <img src="assets/bg-consultants.png" alt="">
-        </div>
     <div class="medium-container">
         <h1 class="main-title">Profil de <?php echo $userData["firstname"]." ".$userData["lastname"];?></h1>
         <h2 class="subtitle">Informations personnelles</h2>
@@ -180,9 +177,6 @@
                             <div>
                                 <h4>Commentaire du référent</h4>
                                 <p class="box-text"><?php echo $reference['refComment']; ?></p>
-                            </div>
-                            <div class="reference-id">
-                                <p class="legend"><?php echo $key; ?></p>
                             </div>
                         </div>
                         <?php

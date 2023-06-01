@@ -53,7 +53,7 @@
                         </div>";
         } else {
             $send_msg = "<div class='alert alert-danger alert-white rounded'>
-                            <div class='icon'><i class='fa fa-check'></i></div>
+                            <div class='icon'><i class='fa fa-times-circle'></i></div>
                             <strong>Erreur</strong> L'email n'a pas pu être envoyé à $receiver
                         </div>";
         }
@@ -100,9 +100,6 @@
         </div>
     </header>
     <section class="young">
-        <div class="background-img">
-            <img src="assets/bg-jeunes.png" alt="">
-        </div>
         <div class="subnav">
             <div class="medium-container">
                 <ul class="subnav-list">

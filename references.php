@@ -77,9 +77,6 @@
 	</header>
 
 	<section class="young">
-		<div class="background-img">
-            <img src="assets/bg-jeunes.png" alt="">
-        </div>
 		<div class="subnav">
 			<div class="medium-container">
 				<ul class="subnav-list">
@@ -164,7 +161,6 @@
 									</div>
 								</div>
 								<div class="del-btn">
-									<p class="legend"><?php echo $key; ?></p>
 									<a href="#" class="delete-link" onclick="confirmDeletion('<?php echo $key; ?>')"><i class="fa-solid fa-trash"></i></a>
 								</div>
 							</div>
@@ -261,7 +257,6 @@
 									<p class="box-text"><?php echo $reference['refComment']; ?></p>
 								</div>
 								<div class="del-btn">
-									<p class="legend"><?php echo $key; ?></p>
 									<a href="#" class="delete-link" onclick="confirmDeletion('<?php echo $key; ?>')"><i class="fa-solid fa-trash"></i></a>
 								</div>
 							</div>
