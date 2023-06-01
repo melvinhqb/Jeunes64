@@ -17,6 +17,7 @@ etc.).
 Pour consulter sa demande de référence, il vous suffit de cliquer sur le lien suivant ou de saisir le code de validation :
 
 {LINK}
+
 {CODE}
 
 Cordialement,
